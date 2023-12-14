@@ -1,0 +1,3 @@
+# task :build do
+#   `atome build`
+# end
