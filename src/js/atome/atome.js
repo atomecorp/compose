@@ -63,8 +63,6 @@ async function changeCurrentDirectory(atome_id, newPath) {
 }
 
 
-
-
 // Terminal
 
 async function terminal(atome_id, cmd) {
@@ -152,29 +150,71 @@ function createSvgElement(tagName, attributes) {
     return elem;
 }
 
+//
+// function sanitizeString(str) {
+//     return str.replace(/'/g, "\\'");
+// }
+// function fileread(){
+//     var inputElement = document.createElement("input");
+//     inputElement.type = "file";
+//
+//     inputElement.addEventListener("change", function(event) {
+//         var file = event.target.files[0];
+//         var reader = new FileReader();
+//
+//         reader.onload = function(event) {
+//             var content = event.target.result;
+//             var sanitizedContent = sanitizeString(content);
+//             rubyVMCallback("input_callback('"+sanitizedContent+"')");
+//         };
+//
+//         reader.readAsText(file);
+//     });
+//
+// // Ajout de l'élément input à la div
+//     var viewDiv = document.querySelector("#support");
+//     viewDiv.appendChild(inputElement);
+// }
 
-function sanitizeString(str) {
-    return str.replace(/'/g, "\\'");
-}
-function fileread(){
-    var inputElement = document.createElement("input");
-    inputElement.type = "file";
 
-    inputElement.addEventListener("change", function(event) {
-        var file = event.target.files[0];
-        var reader = new FileReader();
+function fileForOpal(parent, bloc) {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.style.position = "absolute";
+    input.style.display = "none";
+    input.style.width = "0px";
+    input.style.height = "0px";
+    input.addEventListener('change', function (event) {
+        let file = event.target.files[0];
+        let reader = new FileReader();
 
-        reader.onload = function(event) {
-            var content = event.target.result;
-            var sanitizedContent = sanitizeString(content);
-            rubyVMCallback("input_callback('"+sanitizedContent+"')");
+        reader.onloadstart = function () {
+            console.log("Load start");
+        };
+
+        reader.onprogress = function (e) {
+            console.log("Loading: " + (e.loaded / e.total * 100) + '%');
+        };
+
+        reader.onload = function (e) {
+            var content = e.target.result;
+            Opal.Atome.$file_handler(parent, content, bloc)
+        };
+
+        reader.onloadend = function () {
+            console.log("Load end");
+        };
+
+        reader.onerror = function () {
+            console.error("Error reading file");
         };
 
         reader.readAsText(file);
     });
+    let div_element = document.getElementById(parent);
+    div_element.appendChild(input);
+    div_element.addEventListener('mousedown', function (event) {
+        input.click()
+    })
 
-// Ajout de l'élément input à la div
-    var viewDiv = document.querySelector("#support");
-    viewDiv.appendChild(inputElement);
 }
-

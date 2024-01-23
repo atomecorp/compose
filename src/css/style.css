@@ -16,6 +16,12 @@ html, body {
     z-index: 0;
     color: lightgray;
 }
+pre {
+    min-width: 100px;
+    margin: 0;
+    padding: 0;
+}
+
 
 .matrix{
     background-color: blue;
@@ -23,7 +29,7 @@ html, body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
     padding: 3px;
 }
 /*.matrix_element{*/
@@ -152,3 +158,5 @@ html, body {
 /*    color: transparent;*/
 /*    background: none;*/
 /*}*/
+
+

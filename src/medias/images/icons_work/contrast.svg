@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="892px" height="928px" viewBox="0 0 892 928" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>contrast</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Mobile" transform="translate(-281.500000, 3516.500000) scale(-1, 1) translate(281.500000, -3516.500000) translate(-11057.000000, -2219.000000)" stroke="#FFFFFF" stroke-width="61">
+            <g id="contrast" transform="translate(10053.000000, 2677.000000) scale(-1, 1) translate(-10053.000000, -2677.000000) translate(9615.000000, 2217.000000)">
+                <path d="M16.049241,377.170109 C55.889241,151.190109 271.389241,0.300109419 497.369241,40.1501094 C695.939241,75.1601094 840.709241,247.690109 840.709241,449.320109" id="canvas3-oval" transform="translate(428.379241, 241.543754) rotate(-4.660000) translate(-428.379241, -241.543754) "></path>
+                <path d="M40.4873267,826.640321 C80.3273267,600.660321 295.827327,449.770321 521.807327,489.620321 C720.377327,524.630321 865.147327,697.160321 865.147327,898.790321" id="canvas3-oval2" opacity="0.2" transform="translate(452.817327, 691.013965) rotate(177.130000) translate(-452.817327, -691.013965) "></path>
+                <path d="M152.180986,411.396987 C179.610986,255.546987 328.000986,151.476987 483.600986,178.966987 C620.330986,203.106987 720.010986,322.096987 720.010986,461.156987" id="canvas3-oval3" opacity="0.8" transform="translate(436.095986, 317.860130) rotate(-4.660000) translate(-436.095986, -317.860130) "></path>
+                <path d="M169.057282,735.360071 C196.497282,579.520071 344.867282,475.460071 500.467282,502.940071 C637.187282,527.080071 736.857282,646.070071 736.857282,785.120071" id="canvas3-oval4" opacity="0.4" transform="translate(452.957282, 641.829498) rotate(177.130000) translate(-452.957282, -641.829498) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
