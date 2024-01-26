@@ -56,76 +56,45 @@ class Database
       eden = Sequel.connect("sqlite://eden.sqlite3")
     else
       eden = Sequel.connect("sqlite://eden.sqlite3")
-      eden.create_table :atome do
-        primary_key :atome_id
-        String :aui
-        String :id
-        String :type
-        String :name
-        String :content
-        String :position
-        String :dimension
-        String :color
-        String :right
-        String :effect
-        String :shadow
-        String :border
-        String :fill
-        Float :x
-        Float :xx
-        Float :y
-        Float :yy
-        Float :z
-        Float :zz
-        Float :width
-        Float :height
-        Float :depth
-      end
-
-    end
-    eden
-  end
-
-end
-
-class Communication
-  def self.connect_database
-    if File.exist?("eden.sqlite3")
-      eden = Sequel.connect("sqlite://eden.sqlite3")
-    else
-      eden = Sequel.connect("sqlite://eden.sqlite3")
+      # eden.create_table :atome do
+      #   primary_key :atome_id
+      #   String :aui
+      #   String :id
+      #   String :type
+      #   String :name
+      #   String :content
+      #   String :position
+      #   String :dimension
+      #   String :color
+      #   String :right
+      #   String :effect
+      #   String :shadow
+      #   String :border
+      #   String :fill
+      #   Float :x
+      #   Float :xx
+      #   Float :y
+      #   Float :yy
+      #   Float :z
+      #   Float :zz
+      #   Float :width
+      #   Float :height
+      #   Float :depth
+      # end
+      #
       eden.create_table :communication do
         primary_key :communication_id
         String :connection
         String :message
         String :controller
       end
-    end
-    eden
-  end
-end
 
-class Effect
-  def self.connect_database
-    if File.exist.("eden.sqlite3")
-      eden = Sequel.connect("sqlite://eden.sqlite3")
-    else
-      eden = Sequel.connect("sqlite://eden.sqlite3")
       eden.create_table :effect do
         primary_key Int :effect_id
         int :smooth
         int :blur
       end
-    end
-  end
-end
 
-class Event
-  def self.connect_database
-    if File.exist.("eden.sqlite3")
-      eden = Sequel.connect("sqlite://eden.sqlite3")
-    else
-      eden = Sequel.connect("sqlite://eden.sqlite3")
       eden.create_table :event do
         primary_key Int :event_id
         JSON :touch
@@ -154,34 +123,16 @@ class Event
         Boolean :resize
         Boolean :overflow
       end
-    end
-  end
-end
 
-class Geometry
-  def self.connect_database
-    if File.exist.("eden.sqlite3")
-      eden = Sequel.connect("sqlite://eden.sqlite3")
-    else
-      eden = Sequel.connect("sqlite://eden.sqlite3")
       eden.create_table :geometry do
-        primary_key Int geometry_id
+        primary_key Int :geometry_id
         Int :width
         Int :height
         Int :size
       end
-    end
-  end
-end
 
-class Hierarchy
-  def self.connect_database
-    if File.exist.("eden.sqlite3")
-      eden = Sequel.connect("sqlite://eden.sqlite3")
-    else
-      eden = Sequel.connect("sqlite://eden.sqlite3")
       eden.create_table :hierarchy do
-        primary_key Int hierarchy_id
+        primary_key Int :hierarchy_id
         String :attach
         String :attached
         String :apply
@@ -189,18 +140,9 @@ class Hierarchy
         String :detached
         String :collect
       end
-    end
-  end
-end
 
-class Identity
-  def self.connect_database
-    if File.exist.("eden.sqlite3")
-      eden = Sequel.connect("sqlite://eden.sqlite3")
-    else
-      eden = Sequel.connect("sqlite://eden.sqlite3")
       eden.create_table :identity do
-        primary_key Int identity_id
+        primary_key Int :identity_id
         String :real
         String :type
         Int :id
@@ -215,9 +157,241 @@ class Identity
         String :format
         String :alien
       end
+
+      eden.create_table :material do
+        primary_key Int :material_id
+        String :component
+        Boolean :edit
+        String :style
+        Boolean :hide
+        Boolean :remove
+        JSON :classes
+        Boolean :remove_classes
+        Int :opacity
+        String :definition
+        Int :gradient
+        Int :border
+      end
+
+      eden.create_table :property do
+        primary_key Int :property_id
+        String :red
+        String :green
+        String :blue
+        String :alpha
+        String :diffusion
+        Boolean :clean
+        String :insert
+        Boolean :remove
+        Int :sort
+      end
+
+      eden.create_table :security do
+        primary_key Int :security_id
+        String :password
+      end
+
+      eden.create_table :spatial do
+        primary_key Int :spatial_id
+        Int :left
+        Int :right
+        Int :top
+        Int :bottom
+        Int :rotate
+        String :direction
+        String :center
+        Int :depth
+        Int :position
+        String :organise
+        String :spacing
+        Boolean :display
+        String :layout
+      end
+
+      eden.create_table :time do
+        primary_key Int :time_id
+        JSON :markers
+      end
+
+      eden.create_table :utility do
+        primary_key Int :utility_id
+        String :renderers
+        String :code
+        Boolean :run
+        Boolean :delete
+        Boolean :clear
+        String :path
+        String :schedule
+        String :read
+        String :cursor
+        String :preset
+        JSON :relations
+        JSON :tag
+        String :web
+        JSON :unit
+        String :initialize
+        String :login
+        String :hypertext
+        String :hyperedit
+        String :terminal
+        String :read
+        String :browse
+        String :copies
+        Int :temporary
+        String :atomes
+        String :match
+        String :invert
+        String :option
+        String :duplicate
+        String :copy
+        String :paste
+        String :backup
+        String :import
+        String :compute
+        String :get
+      end
+
     end
+    eden
   end
+
 end
+
+# class Communication
+#   def self.connect_database
+#     if File.exist?("eden.sqlite3")
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#     else
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#       eden.create_table :communication do
+#         primary_key :communication_id
+#         String :connection
+#         String :message
+#         String :controller
+#       end
+#     end
+#     eden
+#   end
+# end
+
+# class Effect
+#   def self.connect_database
+#     if File.exist.("eden.sqlite3")
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#     else
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#       eden.create_table :effect do
+#         primary_key Int :effect_id
+#         int :smooth
+#         int :blur
+#       end
+#     end
+#   end
+# end
+
+# class Event
+#   def self.connect_database
+#     if File.exist.("eden.sqlite3")
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#     else
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#       eden.create_table :event do
+#         primary_key Int :event_id
+#         JSON :touch
+#         Boolean :play
+#         Boolean :pause
+#         Int :time
+#         Boolean :on
+#         Boolean :fullscreen
+#         Boolean :mute
+#         Boolean :drag
+#         Boolean :drop
+#         Boolean :over
+#         String :targets
+#         Boolean :start
+#         Boolean :stop
+#         Time :begin
+#         Time :end
+#         Int :duration
+#         Int :mass
+#         Int :damping
+#         Int :stiffness
+#         Int :velocity
+#         Boolean :repeat
+#         Boolean :ease
+#         Boolean :keyboard
+#         Boolean :resize
+#         Boolean :overflow
+#       end
+#     end
+#   end
+# end
+
+# class Geometry
+#   def self.connect_database
+#     if File.exist.("eden.sqlite3")
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#     else
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#       eden.create_table :geometry do
+#         primary_key Int :geometry_id
+#         Int :width
+#         Int :height
+#         Int :size
+#       end
+#     end
+#   end
+# end
+
+# class Hierarchy
+#   def self.connect_database
+#     if File.exist.("eden.sqlite3")
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#     else
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#       eden.create_table :hierarchy do
+#         primary_key Int :hierarchy_id
+#         String :attach
+#         String :attached
+#         String :apply
+#         String :affect
+#         String :detached
+#         String :collect
+#       end
+#     end
+#   end
+# end
+
+# class Identity
+#   def self.connect_database
+#     if File.exist.("eden.sqlite3")
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#     else
+#       eden = Sequel.connect("sqlite://eden.sqlite3")
+#       eden.create_table :identity do
+#         primary_key Int :identity_id
+#         String :real
+#         String :type
+#         Int :id
+#         String :name
+#         Boolean :active
+#         String :markup
+#         String :bundle
+#         String :data
+#         String :category
+#         String :selection
+#         Boolean :selected
+#         String :format
+#         String :alien
+#       end
+#     end
+#   end
+# end
+
+
+
+
+
 
 class App < Roda
 
