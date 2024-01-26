@@ -1,7 +1,5 @@
 /tmp/
 /server/eden.sqlite3
-/src/js/atome/atome.js
-/src/js/atome/kernel.js
 *.ds_store
 *.idea
 
