@@ -1,5 +1,5 @@
 class Atome
   def self.host
-    "universal"
+    "web-opal"
   end
 end
