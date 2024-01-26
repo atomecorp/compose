@@ -29,7 +29,7 @@ const communication = {
 
         if (window.webkit) {
             try {
-                window.webkit.messageHandlers.toggleMessageHandler.postMessage(json_msg);
+                window.webkit.messageHandlers.wkHandler.postMessage(json_msg);
             } catch (error) {
                 console.log('no server, unable to post message')
             }
@@ -86,8 +86,9 @@ const communication = {
         };
 
     },
-    ws_sender: function (address) {
-        this.websocket.send("Hello, WebSocket! !look look")
+    ws_sender: function (message) {
+        // now we send the data to the server
+        this.websocket.send(message)
     },
 }
 
@@ -96,7 +97,6 @@ const communication = {
 
 function connect(address) {
 
-// alert('kool');
     websocket = new WebSocket(address);
 
     websocket.onopen = function (event) {
@@ -120,7 +120,9 @@ function connect(address) {
 
 }
 
-function ws_sender() {
-    websocket.send("the Hello, WebSocket!!!")
-}
 
+
+function controller_message(msg){
+    // message receiver from controller (Vie)
+    console.log(msg)
+}
