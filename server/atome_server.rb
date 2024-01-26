@@ -101,8 +101,13 @@ class App < Roda
   items.insert(name: 'ghi', width: rand * 100)
   puts "Item count: #{items.count}"
   puts "The average price is: #{items.avg(:width)}"
+<<<<<<< HEAD
+=======
+  
+  
+  
+>>>>>>> fd536c3afcdc7dbb3524e8d58b397f18de9376a7
   index_content = File.read("../src/index_server.html")
-
   opts[:root] = '../src'
   plugin :static, %w[/css /js /medias], root: '../src'
   route do |r|
@@ -128,7 +133,15 @@ class App < Roda
           else
             return_message = "no action msg: #{full_data}"
           end
+<<<<<<< HEAD
           ws.send(return_message.to_json)
+=======
+         
+          ws.send( "Hello".to_json)
+          ws.send( "The average price is: #{items.avg(:width)}".to_json)
+          ws.send(return_message.to_json)
+          ws.send( "Hello".to_json)
+>>>>>>> fd536c3afcdc7dbb3524e8d58b397f18de9376a7
         end
 
         ws.on(:close) do |event|

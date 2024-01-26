@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100">
+    <desc iVinci="yes" version="4.4" gridStep="20" showGrid="no" snapToGrid="no" codePlatform="0"/>
+    <g id="Layer1">
+        <g id="Shape1">
+            <desc type="0" basicInfo-basicType="0" basicInfo-roundedRectRadius="12" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-35.25,-35.25,70.5,70.5)" text="" font-familyName="" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1,0,0,1,50,50)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath1" d="M14.75,21.4475 C14.75,17.7486 17.7486,14.75 21.4475,14.75 L78.5525,14.75 C82.2514,14.75 85.25,17.7486 85.25,21.4475 L85.25,78.5525 C85.25,82.2514 82.2514,85.25 78.5525,85.25 L21.4475,85.25 C17.7486,85.25 14.75,82.2514 14.75,78.5525 L14.75,21.4475 Z" style="stroke:#ffffff;stroke-opacity:1;stroke-width:9;stroke-linejoin:round;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:#ffffff;fill-opacity:0;"/>
+        </g>
+        <g id="Shape2">
+            <desc type="0" basicInfo-basicType="0" basicInfo-roundedRectRadius="12" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-14.5,-14.5,29,29)" text="" font-familyName="" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1,0,0,1,49.75,49.75)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath2" d="M64.25,49.75 C64.25,57.7581 57.7581,64.25 49.75,64.25 C41.7419,64.25 35.25,57.7581 35.25,49.75 C35.25,41.7419 41.7419,35.25 49.75,35.25 C57.7581,35.25 64.25,41.7419 64.25,49.75 Z" style="stroke:#ffffff;stroke-opacity:1;stroke-width:9;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:butt;fill-rule:evenodd;fill:#ffffff;fill-opacity:1;"/>
+        </g>
+    </g>
+</svg>

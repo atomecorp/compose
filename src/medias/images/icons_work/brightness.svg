@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="931px" height="886px" viewBox="0 0 931 886" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>brightness</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mobile" transform="translate(-5232.500000, 5577.500000) scale(-1, 1) translate(5232.500000, -5577.500000) translate(-16008.000000, -158.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="brightness" transform="translate(5077.500000, 601.000000) scale(-1, 1) translate(-5077.500000, -601.000000) translate(4612.000000, 158.000000)">
+                <circle id="canvas4-oval13" cx="461" cy="441" r="227"></circle>
+                <ellipse id="canvas4-oval14" cx="459" cy="71" rx="36" ry="71"></ellipse>
+                <ellipse id="canvas4-oval15" cx="459" cy="815" rx="36" ry="71"></ellipse>
+                <ellipse id="canvas4-oval16" transform="translate(859.760000, 441.390000) rotate(-90.000000) translate(-859.760000, -441.390000) " cx="859.76" cy="441.39" rx="35.85" ry="71.24"></ellipse>
+                <ellipse id="canvas4-oval17" transform="translate(71.240000, 434.970000) rotate(-90.000000) translate(-71.240000, -434.970000) " cx="71.24" cy="434.97" rx="35.85" ry="71.24"></ellipse>
+                <ellipse id="canvas4-oval18" transform="translate(809.190000, 279.570000) rotate(63.390000) translate(-809.190000, -279.570000) " cx="809.19" cy="279.57" rx="35.89" ry="71.24"></ellipse>
+                <ellipse id="canvas4-oval19" transform="translate(120.930000, 257.270000) rotate(-56.100000) translate(-120.930000, -257.270000) " cx="120.93" cy="257.27" rx="35.82" ry="71.2"></ellipse>
+                <ellipse id="canvas4-oval20" transform="translate(121.560000, 589.880000) rotate(-116.610000) translate(-121.560000, -589.880000) " cx="121.56" cy="589.88" rx="35.89" ry="71.24"></ellipse>
+                <ellipse id="canvas4-oval21" transform="translate(809.810000, 612.180000) rotate(123.900000) translate(-809.810000, -612.180000) " cx="809.81" cy="612.18" rx="35.82" ry="71.2"></ellipse>
+                <ellipse id="canvas4-oval24" transform="translate(662.550000, 778.540000) rotate(151.390000) translate(-662.550000, -778.540000) " cx="662.55" cy="778.54" rx="35.84" ry="71.16"></ellipse>
+                <ellipse id="canvas4-oval22" transform="translate(247.250000, 103.580000) rotate(-28.610000) translate(-247.250000, -103.580000) " cx="247.25" cy="103.58" rx="33.5" ry="66.5"></ellipse>
+                <ellipse id="canvas4-oval23" transform="translate(636.840000, 127.890000) rotate(32.280000) translate(-636.840000, -127.890000) " cx="636.84" cy="127.89" rx="33.5" ry="66.5"></ellipse>
+                <ellipse id="canvas4-oval25" transform="translate(245.170000, 752.530000) rotate(-147.720000) translate(-245.170000, -752.530000) " cx="245.17" cy="752.53" rx="35.92" ry="71.2"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>

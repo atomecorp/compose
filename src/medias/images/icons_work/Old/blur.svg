@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="391px" height="859px" viewBox="0 0 391 859" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>blur</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Mobile" transform="translate(-9367.500000, -573.500000) scale(-1, 1) translate(9367.500000, 573.500000) translate(-20143.000000, -6309.000000)" stroke="#FFFFFF" stroke-width="140">
+            <g id="blur" transform="translate(1212.000000, 6739.000000) scale(-1, 1) translate(-1212.000000, -6739.000000) translate(954.000000, 6379.000000)">
+                <path d="M341.169765,7.22241133 L202.169765,712.222411" id="canvas5-bezier2" transform="translate(271.669765, 359.722411) rotate(-10.860000) translate(-271.669765, -359.722411) "></path>
+                <path d="M403.169765,7.22241133 L264.169765,712.222411" id="canvas5-bezier" opacity="0.4" transform="translate(333.669765, 359.722411) rotate(-10.860000) translate(-333.669765, -359.722411) "></path>
+                <path d="M450.169765,7.22241133 L311.169765,712.222411" id="canvas5-bezier3" opacity="0.4" transform="translate(380.669765, 359.722411) rotate(-10.860000) translate(-380.669765, -359.722411) "></path>
+                <path d="M258.169765,7.22241133 L119.169765,712.222411" id="canvas5-bezier4" opacity="0.4" transform="translate(188.669765, 359.722411) rotate(-10.860000) translate(-188.669765, -359.722411) "></path>
+                <path d="M204.169765,7.22241133 L65.1697647,712.222411" id="canvas5-bezier5" opacity="0.4" transform="translate(134.669765, 359.722411) rotate(-10.860000) translate(-134.669765, -359.722411) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
