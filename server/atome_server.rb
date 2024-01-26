@@ -233,7 +233,6 @@ class App < Roda
   puts "Item count: #{items.count}"
   puts "The average price is: #{items.avg(:width)}"
   index_content = File.read("../src/index_server.html")
-
   opts[:root] = '../src'
   plugin :static, %w[/css /js /medias], root: '../src'
   route do |r|

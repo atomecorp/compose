@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100">
+    <desc iVinci="yes" version="4.4" gridStep="20" showGrid="no" snapToGrid="no" codePlatform="0"/>
+    <g id="Layer1">
+        <g id="Shape1">
+            <desc type="0" basicInfo-basicType="1" basicInfo-roundedRectRadius="12" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-52.5,-51,105,102)" text="" font-familyName="Helvetica" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(0.952381,0,0,0.980392,50,50)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath1" d="M-7.62939e-06,-7.62939e-06 L100,-7.62939e-06 L100,100 L-7.62939e-06,100 L-7.62939e-06,-7.62939e-06 Z" style="stroke:#333333;stroke-opacity:1;stroke-width:0;stroke-linejoin:miter;stroke-miterlimit:2;stroke-linecap:round;fill-rule:evenodd;fill:#ffffff;fill-opacity:0.0901961;"/>
+        </g>
+    </g>
+</svg>

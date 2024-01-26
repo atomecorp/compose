@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100">
+    <desc iVinci="yes" version="4.4" gridStep="20" showGrid="no" snapToGrid="no" codePlatform="0"/>
+    <g id="Layer1">
+        <g id="Shape1">
+            <desc type="0" basicInfo-basicType="2" basicInfo-roundedRectRadius="3" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-10.8333,-10.8333,21.6667,21.6667)" text="" font-familyName="Helvetica" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1.32692,0,0,1.32692,18.5417,18.5417)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath1" d="M4.16666,8.14743 C4.16666,5.94891 5.94891,4.16666 8.14743,4.16666 L28.9359,4.16666 C31.1344,4.16666 32.9167,5.94891 32.9167,8.14743 L32.9167,28.9359 C32.9167,31.1344 31.1344,32.9167 28.9359,32.9167 L8.14743,32.9167 C5.94891,32.9167 4.16666,31.1344 4.16666,28.9359 L4.16666,8.14743 Z" style="stroke:none;fill-rule:evenodd;fill:#ffffff;fill-opacity:0.784314;"/>
+        </g>
+        <g id="Shape2">
+            <desc type="0" basicInfo-basicType="2" basicInfo-roundedRectRadius="3" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-10.8333,-10.8333,21.6667,21.6667)" text="" font-familyName="Helvetica" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1.32692,0,0,1.32692,81.4584,18.5417)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath2" d="M67.0834,8.14743 C67.0834,5.94891 68.8656,4.16666 71.0641,4.16666 L91.8526,4.16666 C94.0511,4.16666 95.8334,5.94891 95.8334,8.14743 L95.8334,28.9359 C95.8334,31.1344 94.0511,32.9167 91.8526,32.9167 L71.0641,32.9167 C68.8656,32.9167 67.0834,31.1344 67.0834,28.9359 L67.0834,8.14743 Z" style="stroke:none;fill-rule:evenodd;fill:#ffffff;fill-opacity:0.784314;"/>
+        </g>
+        <g id="Shape3">
+            <desc type="0" basicInfo-basicType="2" basicInfo-roundedRectRadius="3" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-10.8333,-10.8333,21.6667,21.6667)" text="" font-familyName="Helvetica" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1.32692,0,0,1.32692,18.5417,81.4584)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath3" d="M4.16666,71.0641 C4.16666,68.8656 5.94891,67.0834 8.14743,67.0834 L28.9359,67.0834 C31.1344,67.0834 32.9167,68.8656 32.9167,71.0641 L32.9167,91.8526 C32.9167,94.0511 31.1344,95.8334 28.9359,95.8334 L8.14743,95.8334 C5.94891,95.8334 4.16666,94.0511 4.16666,91.8526 L4.16666,71.0641 Z" style="stroke:none;fill-rule:evenodd;fill:#ffffff;fill-opacity:0.784314;"/>
+        </g>
+        <g id="Shape4">
+            <desc type="0" basicInfo-basicType="2" basicInfo-roundedRectRadius="3" basicInfo-polygonSides="6" basicInfo-starPoints="5" bounding="rect(-10.8333,-10.8333,21.6667,21.6667)" text="" font-familyName="Helvetica" font-pixelSize="20" font-bold="0" font-underline="0" font-alignment="1" strokeStyle="0" markerStart="0" markerEnd="0" shadowEnabled="0" shadowOffsetX="0" shadowOffsetY="2" shadowBlur="4" shadowOpacity="160" blurEnabled="0" blurRadius="4" transform="matrix(1.32692,0,0,1.32692,81.4584,81.4584)" pers-center="0,0" pers-size="0,0" pers-start="0,0" pers-end="0,0" locked="0" mesh="" flag=""/>
+            <path id="shapePath4" d="M67.0834,71.0641 C67.0834,68.8656 68.8656,67.0834 71.0641,67.0834 L91.8526,67.0834 C94.0511,67.0834 95.8334,68.8656 95.8334,71.0641 L95.8334,91.8526 C95.8334,94.0511 94.0511,95.8334 91.8526,95.8334 L71.0641,95.8334 C68.8656,95.8334 67.0834,94.0511 67.0834,91.8526 L67.0834,71.0641 Z" style="stroke:none;fill-rule:evenodd;fill:#ffffff;fill-opacity:0.784314;"/>
+        </g>
+    </g>
+</svg>

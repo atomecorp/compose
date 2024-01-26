@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="880px" height="868px" viewBox="0 0 880 868" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>sepia</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="98.6452312%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mobile" transform="translate(-2586.500000, 3423.500000) scale(-1, 1) translate(2586.500000, -3423.500000) translate(-13362.000000, -2312.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="sepia" transform="translate(7749.000000, 2752.000000) scale(-1, 1) translate(-7749.000000, -2752.000000) translate(7309.000000, 2312.000000)">
+                <path d="M440,41 C355.47,41 277.08,67.29 212.56,112.13 C108.88,184.19 41,304.17 41,440 C41,660.36 219.64,839 440,839 C660.36,839 839,660.36 839,440 C839,219.64 660.36,41 440,41 Z M880,440 C880,683.01 683.01,880 440,880 C196.99,880 0,683.01 0,440 C0,296.26 68.92,168.63 175.52,88.33 C249.14,32.87 340.73,0 440,0 C683.01,0 880,196.99 880,440 Z" id="canvas7-bezier"></path>
+                <path d="M412,81.36 C343.22,81.36 279.44,102.75 226.95,139.23 C142.58,197.86 87.36,295.48 87.36,406 C87.36,585.29 232.71,730.64 412,730.64 C591.29,730.64 736.64,585.29 736.64,406 C736.64,226.71 591.29,81.36 412,81.36 Z M770,406 C770,603.72 609.72,764 412,764 C214.28,764 54,603.72 54,406 C54,289.05 110.08,185.2 196.81,119.87 C256.71,74.75 331.23,48 412,48 C609.72,48 770,208.28 770,406 Z" id="canvas7-bezier2"></path>
+            </g>
+        </g>
+    </g>
+</svg>

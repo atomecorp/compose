@@ -1,10 +1,18 @@
 # frozen_string_literal: true
+#
+b = box({ color: :red })
 
-# my code here ..
+b.touch(true) do
+  grab(:view).connection('localhost:9292') do |params|
+  puts " the connection is : #{params}"
+  end
 
-# open the console in your browser ou your native app and should see the text below
-puts "hello world"
-puts Universe.atome_list
-puts "STOP!!!!"
+end
 
-require  './required_example'
+
+c = box({ color: :yellow, left: 333 })
+
+c.touch(true) do
+  b.message('****************************************')
+  # c = box({ color: :red, left: 333 })
+end
