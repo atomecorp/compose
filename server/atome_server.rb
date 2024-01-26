@@ -88,6 +88,137 @@ class Database
 
 end
 
+class Communication
+  def self.connect_database
+    if File.exist?("eden.sqlite3")
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+    else
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+      eden.create_table :communication do
+        primary_key :communication_id
+        String :connection
+        String :message
+        String :controller
+      end
+    end
+    eden
+  end
+end
+
+class Effect
+  def self.connect_database
+    if File.exist.("eden.sqlite3")
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+    else
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+      eden.create_table :effect do
+        primary_key Int :effect_id
+        int :smooth
+        int :blur
+      end
+    end
+  end
+end
+
+class Event
+  def self.connect_database
+    if File.exist.("eden.sqlite3")
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+    else
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+      eden.create_table :event do
+        primary_key Int :event_id
+        JSON :touch
+        Boolean :play
+        Boolean :pause
+        Int :time
+        Boolean :on
+        Boolean :fullscreen
+        Boolean :mute
+        Boolean :drag
+        Boolean :drop
+        Boolean :over
+        String :targets
+        Boolean :start
+        Boolean :stop
+        Time :begin
+        Time :end
+        Int :duration
+        Int :mass
+        Int :damping
+        Int :stiffness
+        Int :velocity
+        Boolean :repeat
+        Boolean :ease
+        Boolean :keyboard
+        Boolean :resize
+        Boolean :overflow
+      end
+    end
+  end
+end
+
+class Geometry
+  def self.connect_database
+    if File.exist.("eden.sqlite3")
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+    else
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+      eden.create_table :geometry do
+        primary_key Int geometry_id
+        Int :width
+        Int :height
+        Int :size
+      end
+    end
+  end
+end
+
+class Hierarchy
+  def self.connect_database
+    if File.exist.("eden.sqlite3")
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+    else
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+      eden.create_table :hierarchy do
+        primary_key Int hierarchy_id
+        String :attach
+        String :attached
+        String :apply
+        String :affect
+        String :detached
+        String :collect
+      end
+    end
+  end
+end
+
+class Identity
+  def self.connect_database
+    if File.exist.("eden.sqlite3")
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+    else
+      eden = Sequel.connect("sqlite://eden.sqlite3")
+      eden.create_table :identity do
+        primary_key Int identity_id
+        String :real
+        String :type
+        Int :id
+        String :name
+        Boolean :active
+        String :markup
+        String :bundle
+        String :data
+        String :category
+        String :selection
+        Boolean :selected
+        String :format
+        String :alien
+      end
+    end
+  end
+end
+
 class App < Roda
 
   # comment below when test will be done
@@ -101,12 +232,6 @@ class App < Roda
   items.insert(name: 'ghi', width: rand * 100)
   puts "Item count: #{items.count}"
   puts "The average price is: #{items.avg(:width)}"
-<<<<<<< HEAD
-=======
-  
-  
-  
->>>>>>> fd536c3afcdc7dbb3524e8d58b397f18de9376a7
   index_content = File.read("../src/index_server.html")
   opts[:root] = '../src'
   plugin :static, %w[/css /js /medias], root: '../src'
@@ -133,15 +258,7 @@ class App < Roda
           else
             return_message = "no action msg: #{full_data}"
           end
-<<<<<<< HEAD
           ws.send(return_message.to_json)
-=======
-         
-          ws.send( "Hello".to_json)
-          ws.send( "The average price is: #{items.avg(:width)}".to_json)
-          ws.send(return_message.to_json)
-          ws.send( "Hello".to_json)
->>>>>>> fd536c3afcdc7dbb3524e8d58b397f18de9376a7
         end
 
         ws.on(:close) do |event|
