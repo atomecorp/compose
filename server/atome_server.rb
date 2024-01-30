@@ -56,47 +56,26 @@ class Database
       eden = Sequel.connect("sqlite://eden.sqlite3")
     else
       eden = Sequel.connect("sqlite://eden.sqlite3")
-      # eden.create_table :atome do
-      #   primary_key :atome_id
-      #   String :aui
-      #   String :id
-      #   String :type
-      #   String :name
-      #   String :content
-      #   String :position
-      #   String :dimension
-      #   String :color
-      #   String :right
-      #   String :effect
-      #   String :shadow
-      #   String :border
-      #   String :fill
-      #   Float :x
-      #   Float :xx
-      #   Float :y
-      #   Float :yy
-      #   Float :z
-      #   Float :zz
-      #   Float :width
-      #   Float :height
-      #   Float :depth
-      # end
-      #
+      eden.create_table :atome do
+        primary_key :atome_id
+        String :creator
+      end
+
       eden.create_table :communication do
         primary_key :communication_id
         String :connection
-        String :message
-        String :controller
+        JSON :message
+        JSON :controller
       end
 
       eden.create_table :effect do
-        primary_key Int :effect_id
-        int :smooth
-        int :blur
+        primary_key :effect_id
+        Int :smooth
+        Int :blur
       end
 
       eden.create_table :event do
-        primary_key Int :event_id
+        primary_key :event_id
         JSON :touch
         Boolean :play
         Boolean :pause
@@ -125,14 +104,14 @@ class Database
       end
 
       eden.create_table :geometry do
-        primary_key Int :geometry_id
+        primary_key :geometry_id
         Int :width
         Int :height
         Int :size
       end
 
       eden.create_table :hierarchy do
-        primary_key Int :hierarchy_id
+        primary_key :hierarchy_id
         String :attach
         String :attached
         String :apply
@@ -142,7 +121,7 @@ class Database
       end
 
       eden.create_table :identity do
-        primary_key Int :identity_id
+        primary_key :identity_id
         String :real
         String :type
         Int :id
@@ -159,7 +138,7 @@ class Database
       end
 
       eden.create_table :material do
-        primary_key Int :material_id
+        primary_key :material_id
         String :component
         Boolean :edit
         String :style
@@ -174,7 +153,7 @@ class Database
       end
 
       eden.create_table :property do
-        primary_key Int :property_id
+        primary_key :property_id
         String :red
         String :green
         String :blue
@@ -187,12 +166,12 @@ class Database
       end
 
       eden.create_table :security do
-        primary_key Int :security_id
+        primary_key :security_id
         String :password
       end
 
       eden.create_table :spatial do
-        primary_key Int :spatial_id
+        primary_key :spatial_id
         Int :left
         Int :right
         Int :top
@@ -209,12 +188,12 @@ class Database
       end
 
       eden.create_table :time do
-        primary_key Int :time_id
+        primary_key :time_id
         JSON :markers
       end
 
       eden.create_table :utility do
-        primary_key Int :utility_id
+        primary_key :utility_id
         String :renderers
         String :code
         Boolean :run
@@ -234,13 +213,12 @@ class Database
         String :hypertext
         String :hyperedit
         String :terminal
-        String :read
         String :browse
         String :copies
         Int :temporary
         String :atomes
         String :match
-        String :invert
+        Boolean :invert
         String :option
         String :duplicate
         String :copy
@@ -401,11 +379,12 @@ class App < Roda
   items = eden[:atome]
 
   # populate the table
-  items.insert(name: 'abc', width: rand * 100)
-  items.insert(name: 'def', width: rand * 100)
-  items.insert(name: 'ghi', width: rand * 100)
+  items.insert(creator: 'moi')
+  items.insert(creator: 'toi')
+  items.insert(creator: 'vous')
   puts "Item count: #{items.count}"
-  puts "The average price is: #{items.avg(:width)}"
+  test= "Item count: #{items.count}"
+  # puts "My name is: #{items(:creator)}"
   index_content = File.read("../src/index_server.html")
   opts[:root] = '../src'
   plugin :static, %w[/css /js /medias], root: '../src'
@@ -430,7 +409,7 @@ class App < Roda
           if action_requested
             return_message = EDen.safe_send(action_requested, message,option,ws,value, current_user, user_pass)
           else
-            return_message = "no action msg: #{full_data}"
+            return_message = "no action msg: #{test}"
           end
           ws.send(return_message.to_json)
         end
