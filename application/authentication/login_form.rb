@@ -1,6 +1,6 @@
 
 #Création du formulaire
-form = box({ width: 500, height: 350 , left: 550, top: 200, color: :green, border: {thickness: 2, color: color(:blue), pattern: :solid}})
+form = box({ width: 500, height: 350, left: 550, top: 200, color: :green, border: {thickness: 2, color: color(:blue), pattern: :solid}})
 
 #Input email
 email_box = form.box( {data: :hello,width: 400, height: 50, left: 50, top: 50, color: :white, border: {thickness: 1, color: color(:black), pattern: :solid}, id: :email_box})

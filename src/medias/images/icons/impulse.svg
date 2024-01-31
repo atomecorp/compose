@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="150" height="150"  xml:space="preserve" id="closeCanvas">
-	<rect id="closeCanvas-brightnessCanvasrectangle" stroke="none" fill="rgb(255, 255, 255)" x="7" y="14" width="135" height="29" rx="14.5" />
-	<rect id="closeCanvas-brightnessCanvasrectangle2" stroke="none" fill="rgb(255, 255, 255)" x="7" y="61" width="135" height="29" rx="14.5" />
-	<rect id="closeCanvas-brightnessCanvasrectangle3" stroke="none" fill="rgb(255, 255, 255)" x="7" y="108" width="135" height="29" rx="14.5" />
-</svg>
