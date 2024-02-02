@@ -14,11 +14,39 @@ require 'roda'
 require 'rufus-scheduler'
 require 'securerandom'
 require 'sequel'
-require './database/index'
 
 class EDen
   def self.terminal(cmd,option,ws,value, user, pass)
     `#{cmd}`
+  end
+
+  def self.authentification(cmd,option,ws,value,user,pass)
+    # Établir une connexion à la base de données
+    db = Database.connect_database
+    identity_items = db[:identity]
+    security_items = db[:security]
+
+    identity_items.insert(email: 'tre@tre')
+    security_items.insert(password: 'poipoi')
+    # testtest= "Mails count: #{identity_items.count}"
+
+    user_email = value["mail"]
+    user_password = value["pass"]
+
+    # Requête pour vérifier si l'email existe
+    user_exists = identity_items.all.select{|item| item[:email]==user_email}
+    if user_exists.empty?
+      # "Mails count: #{identity_items.count}"
+      # "Mails count: #{identity_items.all}"
+      "Email non trouvé, erreur"
+      # Ask to the user if he wants to subscribe
+      # Send the basic template
+    else
+      "Email trouvé, cherche mdp"
+      # Verify password
+      # If password isn't ok, send error
+      # If the password is ok, send the user account template
+    end
   end
 
   def self.file(source, operation,ws,value,user, pass)
@@ -127,6 +155,9 @@ class Database
         String :type
         Int :id
         String :name
+        String :firstname
+        String :email
+        String :nickname
         Boolean :active
         String :markup
         String :bundle
@@ -235,10 +266,6 @@ class Database
   end
 
 end
-
-
-
-
 
 
 class App < Roda
