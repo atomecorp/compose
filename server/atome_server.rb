@@ -26,8 +26,8 @@ class EDen
     identity_items = db[:identity]
     security_items = db[:security]
 
-    identity_items.insert(email: 'tre@tre')
-    security_items.insert(password: 'poipoi')
+    # identity_items.insert(email: 'tre@tre')
+    # security_items.insert(password: 'poipoi')
     # testtest= "Mails count: #{identity_items.count}"
 
     user_email = value["mail"]
@@ -271,7 +271,7 @@ end
 class App < Roda
 
   # comment below when test will be done
-  File.delete("./eden.sqlite3") if File.exist?("./eden.sqlite3")
+  # File.delete("./eden.sqlite3") if File.exist?("./eden.sqlite3")
   eden = Database.connect_database
   items = eden[:atome]
 
