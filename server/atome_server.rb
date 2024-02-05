@@ -114,7 +114,7 @@ class Database
         Boolean :mute
         Boolean :drag
         Boolean :drop
-        Boolean :over
+        Hash :over
         String :targets
         Boolean :start
         Boolean :stop
@@ -127,7 +127,7 @@ class Database
         Int :velocity
         Boolean :repeat
         Boolean :ease
-        Boolean :keyboard
+        Hash :keyboard
         Boolean :resize
         Boolean :overflow
       end
@@ -221,7 +221,7 @@ class Database
 
       eden.create_table :time do
         primary_key :time_id
-        JSON :markers
+        Hash :markers
       end
 
       eden.create_table :utility do
@@ -236,8 +236,8 @@ class Database
         String :read
         String :cursor
         String :preset
-        JSON :relations
-        JSON :tag
+        Hash :relations
+        Hash :tag
         String :web
         JSON :unit
         String :initialize
@@ -259,6 +259,7 @@ class Database
         String :import
         String :compute
         String :get
+        String :css
       end
 
     end

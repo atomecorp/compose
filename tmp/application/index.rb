@@ -1,4 +1,4 @@
-require 'authentication/login_form'
+ require 'authentication/login_form'
 
 # frozen_string_literal: true
 
