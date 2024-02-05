@@ -34,19 +34,26 @@ class EDen
     user_password = value["pass"]
 
     # Requête pour vérifier si l'email existe
-    user_exists = identity_items.all.select{|item| item[:email]==user_email}
-    if user_exists.empty?
-      # "Mails count: #{identity_items.count}"
-      # "Mails count: #{identity_items.all}"
-      "Email non trouvé, erreur"
+    user_email_exists = identity_items.all.select{|item| item[:email]==user_email}
+    if user_email_exists.empty?
+      "Email non trouvé, tu es sûr de toi? Sinon tu peux créer un compte si tu veux"
       # Ask to the user if he wants to subscribe
       # Send the basic template
     else
       "Email trouvé, cherche mdp"
       # Verify password
+      user_password_exists = security_items.all.select{|item| item[:password]==user_password}
       # If password isn't ok, send error
-      # If the password is ok, send the user account template
+      if user_password_exists.empty?
+      #   throw error
+      "Votre mot de passe ne correspond pas"
+      else
+      # send the user account template
+      "Tiens, voilà ta page frérot!"
+      end
+
     end
+
   end
 
   def self.file(source, operation,ws,value,user, pass)
