@@ -16,35 +16,44 @@ require 'securerandom'
 require 'sequel'
 
 class EDen
-  
-  def self.authentification(cmd, option, ws, value, user, pass)
-    value
-    eden = Database.connect_database
-    items = eden[:identity]
-
-    # populate the table
-    items.insert(creator: 'moi')
-    items.insert(creator: 'toi')
-    items.insert(creator: 'vous')
-
-    target_creator = "toi"
-    test = items.all.select { |item| item[:creator] == target_creator }
-
-  end
-  def self.terminal(cmd, option, ws, value, user, pass)
+  def self.terminal(cmd,option,ws,value, user, pass)
     `#{cmd}`
   end
 
-  def self.init_db(cmd, option, ws, value, user, pass)
-    "the value is : #{value}"
+  def self.authentification(cmd,option,ws,value,user,pass)
+    # Établir une connexion à la base de données
+    db = Database.connect_database
+    identity_items = db[:identity]
+    security_items = db[:security]
+
+    # identity_items.insert(email: 'tre@tre')
+    # security_items.insert(password: 'poipoi')
+    # testtest= "Mails count: #{identity_items.count}"
+
+    user_email = value["mail"]
+    user_password = value["pass"]
+
+    # Requête pour vérifier si l'email existe
+    user_exists = identity_items.all.select{|item| item[:email]==user_email}
+    if user_exists.empty?
+      # "Mails count: #{identity_items.count}"
+      # "Mails count: #{identity_items.all}"
+      "Email non trouvé, erreur"
+      # Ask to the user if he wants to subscribe
+      # Send the basic template
+    else
+      "Email trouvé, cherche mdp"
+      # Verify password
+      # If password isn't ok, send error
+      # If the password is ok, send the user account template
+    end
   end
 
-  def self.file(source, operation, ws, value, user, pass)
-    file_content = File.send(operation, source, value).to_s
+  def self.file(source, operation,ws,value,user, pass)
+    file_content= File.send(operation, source, value).to_s
     file_content = file_content.gsub("'", "\"")
     "=> operation: #{operation}, source:  #{source} , content : #{file_content},"
   end
-
   # return_message = EDen.safe_send(action_requested, message,option, current_user, user_pass)
 
   def self.safe_send(method_name, *args)
@@ -69,8 +78,6 @@ class String
     end
   end
 end
-
-puts "kjhj"
 
 class Database
   def self.connect_database
@@ -148,6 +155,9 @@ class Database
         String :type
         Int :id
         String :name
+        String :firstname
+        String :email
+        String :nickname
         Boolean :active
         String :markup
         String :bundle
@@ -257,10 +267,11 @@ class Database
 
 end
 
+
 class App < Roda
 
   # comment below when test will be done
-  File.delete("./eden.sqlite3") if File.exist?("./eden.sqlite3")
+  # File.delete("./eden.sqlite3") if File.exist?("./eden.sqlite3")
   eden = Database.connect_database
   items = eden[:atome]
 
@@ -268,16 +279,9 @@ class App < Roda
   items.insert(creator: 'moi')
   items.insert(creator: 'toi')
   items.insert(creator: 'vous')
-
-  target_creator = "toi"
-  test = items.all.select { |item| item[:creator] == target_creator }
-
-
   puts "Item count: #{items.count}"
-  # test = "Item count: #{items.count}"
+  test= "Item count: #{items.count}"
   # puts "My name is: #{items(:creator)}"
-
-
   index_content = File.read("../src/index_server.html")
   opts[:root] = '../src'
   plugin :static, %w[/css /js /medias], root: '../src'
@@ -287,7 +291,7 @@ class App < Roda
         ws = Faye::WebSocket.new(r.env)
         ws.on :open do |event|
           ws.send('server ready'.to_json)
-          # ws.send('asking for synchro data'.to_json)
+          ws.send('asking for synchro data'.to_json)
         end
 
         ws.on(:message) do |event|
@@ -295,12 +299,12 @@ class App < Roda
           full_data = JSON.parse(json_string)
           message = full_data['message']
           action_requested = full_data['action']
-          value = full_data['value']
-          option = full_data['option']
+          value= full_data['value']
+          option= full_data['option']
           current_user = full_data['user']
           user_pass = full_data['pass']['global']
           if action_requested
-            return_message = EDen.safe_send(action_requested, message, option, ws, value, current_user, user_pass)
+            return_message = EDen.safe_send(action_requested, message,option,ws,value, current_user, user_pass)
           else
             return_message = "no action msg: #{test}"
           end
