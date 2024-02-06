@@ -20,40 +20,69 @@ class EDen
     `#{cmd}`
   end
 
-  def self.authentification(cmd,option,ws,value,user,pass)
+  def self.database_connection
     # Établir une connexion à la base de données
     db = Database.connect_database
     identity_items = db[:identity]
     security_items = db[:security]
-
     # identity_items.insert(email: 'tre@tre')
     # security_items.insert(password: 'poipoi')
-    # testtest= "Mails count: #{identity_items.count}"
+    # "Mails count: #{identity_items.count}"
+    # "Mails count: #{identity_items.all}"
+    return identity_items, security_items
+  end
+
+  def self.authentification(cmd,option,ws,value,user,pass)
+    # Établir une connexion à la base de données :
+    EDen.database_connection
+    # Récupération des données des tables identity et security retournées par la fonction database_connection :
+    identity_items, security_items = database_connection
 
     user_email = value["mail"]
     user_password = value["pass"]
 
-    # Requête pour vérifier si l'email existe
+    # Requête pour vérifier si l'email et le password existent
     user_email_exists = identity_items.all.select{|item| item[:email]==user_email}
-    if user_email_exists.empty?
-      "Email non trouvé, tu es sûr de toi? Sinon tu peux créer un compte si tu veux"
-      # Ask to the user if he wants to subscribe
-      # Send the basic template
+    user_password_exists = security_items.all.select{|item| item[:password]==user_password}
+
+    if user_email_exists.empty? || user_password_exists.empty?
+      "Email et/ou password pas ok"
     else
-      "Email trouvé, cherche mdp"
-      # Verify password
-      user_password_exists = security_items.all.select{|item| item[:password]==user_password}
-      # If password isn't ok, send error
-      if user_password_exists.empty?
-      #   throw error
-      "Votre mot de passe ne correspond pas"
-      else
-      # send the user account template
-      "Tiens, voilà ta page frérot!"
-      end
-
+      # send the user's account template
+      "Email et password trouvés, voilà ton template frérot!"
     end
+  end
 
+  def self.account_creation(cmd,option,ws,value,user,pass)
+    # Établir une connexion à la base de données
+    EDen.database_connection
+
+    user_email = value["mail"]
+    user_password = value["pass"]
+
+    # Requête pour vérifier si l'email et le password existent
+    user_email_exists = identity_items.all.select{|item| item[:email]==user_email}
+    # user_password_exists = security_items.all.select{|item| item[:password]==user_password}
+
+    # Si l'input email est vide :
+    if user_email.nil? # equiv si user_email est nul ou retourne une chaine de caractères vide
+      "Veuillez renseigner votre adresse email"
+    # Si l'input password est vide :
+    # elsif user_password.nil? || user_password.empty? # equiv si user_password est nul ou retourne une chaine de caractères vide
+    #   "Veuillez renseigner votre mot de passe"
+    # Si la recherche de l'adresse mail n'est pas vide :
+    elsif !user_email_exists.empty?
+      user_email_exists = identity_items.any? { |item| item[:email] == user_email }
+      "Cette adresse email est déjà utilisée"
+    else
+      # Stockage email et password en BDD
+      identity_items.insert(email: user_email)
+      security_items.insert(password: user_password) #HASHER LE MOT DE PASSE!!!
+      return "Compte créé avec succès. Vous allez maintenant être automatiquement connecté"
+      # Envoi de mail pour confirmation de l'adresse mail
+      # Connexion au compte utilisateur
+      # Renvoi du template avec presets de base
+    end
   end
 
   def self.file(source, operation,ws,value,user, pass)
