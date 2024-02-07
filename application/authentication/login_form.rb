@@ -60,16 +60,16 @@ connection = form.box({width: 100,
 
 connection.touch(true) do
   # Vérification que les champs email et password ne sont pas envoyés vides :
-  if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
-    puts "Veuillez renseigner votre adresse email et votre mot de passe."
-    elsif email_text.data.nil? || email_text.data.strip.empty?
-    puts "Veuillez renseigner votre adresse email."
-  elsif password_text.data.nil? || password_text.data.strip.empty?
-      puts "Veuillez renseigner votre mot de passe."
-  else
+  # if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
+  #   puts "Veuillez renseigner votre adresse email et votre mot de passe."
+  # elsif email_text.data.nil? || email_text.data.strip.empty?
+  #   puts "Veuillez renseigner votre adresse email."
+  # elsif password_text.data.nil? || password_text.data.strip.empty?
+  #     puts "Veuillez renseigner votre mot de passe."
+  # else
     # Envoi des données du formulaire au serveur :
     A.message({action: :authentification, value: { mail: email_text.data || "", pass: password_text.data || ""} })
-  end
+  # end
 end
 
 #Bouton création compte
@@ -87,13 +87,13 @@ creation = form.box({width: 110,
 
 creation.touch(true) do
   # Vérification que les champs email et password ne sont pas envoyés vides :
-  if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
-    puts "Veuillez renseigner votre adresse email et votre mot de passe."
-  elsif email_text.data.nil? || email_text.data.strip.empty?
-    puts "Veuillez renseigner votre adresse email."
-  elsif password_text.data.nil? || password_text.data.strip.empty?
-    puts "Veuillez renseigner votre mot de passe."
-  else
-  A.message({action: :account_creation, value: {mail: email_text.data || "", pass: password_text.data || ""}}) # renvoie la donnée ou une chaine de caractères vide si aucune donnée n'est renseignée
-  end
+  # if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
+  #   puts "Veuillez renseigner votre adresse email et votre mot de passe."
+  # elsif email_text.data.nil? || email_text.data.strip.empty?
+  #   puts "Veuillez renseigner votre adresse email."
+  # elsif password_text.data.nil? || password_text.data.strip.empty?
+  #   puts "Veuillez renseigner votre mot de passe."
+  # else
+  A.message({action: :account_creation, value: {mail: :email_text["data"] || "", pass: :password_text["data"] || ""}}) # renvoie la donnée ou une chaine de caractères vide si aucune donnée n'est renseignée
+  # end
 end
