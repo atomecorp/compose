@@ -42,7 +42,11 @@ password_box = form.box({width: 400,
                          id: :password})
 
 #Nouvel objet password_text, enfant de la box password
-password_text = password_box.text({data: :Password, left: 25, edit: true, color: :black, id: :password_text_id, })
+password_text = password_box.text({data: :Password, 
+                                   left: 25, 
+                                   edit: true, 
+                                   color: :black, 
+                                   id: :password_text_id, })
 
 #Bouton connexion
 connection = form.box({width: 100,
@@ -68,7 +72,8 @@ connection.touch(true) do
   #     puts "Veuillez renseigner votre mot de passe."
   # else
     # Envoi des données du formulaire au serveur :
-    A.message({action: :authentification, value: { mail: email_text.data || "", pass: password_text.data || ""} })
+  hashed_password = A.calculate_sha(password_text.data)
+    A.message({action: :authentification, value: { mail: email_text.data, pass: hashed_password} })
   # end
 end
 
@@ -87,13 +92,14 @@ creation = form.box({width: 110,
 
 creation.touch(true) do
   # Vérification que les champs email et password ne sont pas envoyés vides :
-  # if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
-  #   puts "Veuillez renseigner votre adresse email et votre mot de passe."
-  # elsif email_text.data.nil? || email_text.data.strip.empty?
-  #   puts "Veuillez renseigner votre adresse email."
-  # elsif password_text.data.nil? || password_text.data.strip.empty?
-  #   puts "Veuillez renseigner votre mot de passe."
-  # else
-  A.message({action: :account_creation, value: {mail: :email_text["data"] || "", pass: :password_text["data"] || ""}}) # renvoie la donnée ou une chaine de caractères vide si aucune donnée n'est renseignée
-  # end
+  if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
+    puts "Veuillez renseigner votre adresse email et votre mot de passe."
+  elsif email_text.data.nil? || email_text.data.strip.empty?
+    puts "Veuillez renseigner votre adresse email."
+  elsif password_text.data.nil? || password_text.data.strip.empty?
+    puts "Veuillez renseigner votre mot de passe."
+  else
+    hashed_password = A.calculate_sha(password_text.data)
+  A.message({action: :account_creation, value: {mail: email_text.data, pass: hashed_password}}) # renvoie la donnée ou une chaine de caractères vide si aucune donnée n'est renseignée
+  end
 end

@@ -27,8 +27,6 @@ class EDen
     security_items = db[:security]
     # identity_items.insert(email: 'tre@tre')
     # security_items.insert(password: 'poipoi')
-    # "Mails count: #{identity_items.count}"
-    # "Mails list: #{identity_items.all}"
     return identity_items, security_items
   end
 
@@ -38,6 +36,7 @@ class EDen
     # Récupération des données des tables identity et security retournées par la fonction database_connection :
     identity_items, security_items = database_connection
 
+    # Récupération des données envoyées dans le messase
     user_email = value["mail"]
     user_password = value["pass"]
 
@@ -66,68 +65,34 @@ class EDen
     user_email = value["mail"]
     user_password = value["pass"]
 
-    begin
-      # On vérifie que les input email et text ne sont pas vides ou nuls :
-      if (user_email.nil? || user_email.empty?) && (user_password.nil? || user_password.empty?)
-        "Veuillez renseigner votre adresse email et votre mot de passe"
-      elsif user_email.nil? || user_email.empty?
-        "Veuillez renseigner votre adresse email"
-      elsif user_password.nil? || user_password.empty?
-        "Veuillez renseigner votre mot de passe"
-      else
-        "je suis passé par là"
-      end
-
+    # begin
+    #   # On vérifie que les input email et text ne sont pas vides ou nuls :
+    #   if (user_email.nil? || user_email.empty?) && (user_password.nil? || user_password.empty?)
+    #     # return "Veuillez renseigner votre adresse email et votre mot de passe"
+    #     return "email : " + user_email + ", password : " + user_password + "!"
+    #   elsif user_email.nil? || user_email.empty?
+    #     return "Veuillez renseigner votre adresse email"
+    #   elsif user_password.nil? || user_password.empty?
+    #     return "Veuillez renseigner votre mot de passe"
+    #   else
+    #     return "je suis passé par là. Tous les champs sont remplis"
+    #   end
+    #
       # Requête pour vérifier si l'email existe déjà en base
       user_email_exists = identity_items.all.select { |item| item[:email] == user_email }
 
       # Si la recherche de l'adresse mail ne renvoie pas un résultat vide :
       if !user_email_exists.empty?
-        return "Cette adresse email est déjà utilisée"
+        "Cette adresse email est déjà utilisée"
       else
         # Stockage email et password en BDD
         identity_items.insert(email: user_email)
         security_items.insert(password: user_password) # HASHER LE MOT DE PASSE!!!
-        return "Compte créé avec succès. Vous allez maintenant être automatiquement connecté"
+        "Compte créé avec succès. Vous allez maintenant être automatiquement connecté"
         # Envoi de mail pour confirmation de l'adresse mail
         # Connexion au compte utilisateur
         # Renvoi du template avec presets de base
       end
-
-    rescue JSON::ParserError => e
-      puts "Erreur d'analyse JSON : #{e.message}"
-      # puts $!
-      # Envoyez une réponse d'erreur au client
-      # return "Données mal formées reçues."
-      return "class : #{e.class}, #{e.message}"
-    ensure
-    end
-
-    # On vérifie que les input email et text ne sont pas vides ou nuls :
-    # if (user_email.nil? || user_email.empty?) && (user_password.nil? || user_password.empty?)
-    #   "Veuillez renseigner votre adresse email et votre mot de passe"
-    #   elsif user_email.nil? || user_email.empty?
-    #   "Veuillez renseigner votre adresse email"
-    #   elsif user_password.nil? || user_password.empty?
-    #   "Veuillez renseigner votre mot de passe"
-    # end
-    #
-    # Requête pour vérifier si l'email existe déjà en base
-    # user_email_exists = identity_items.all.select{|item| item[:email] == user_email}
-    #
-    # Si la recherche de l'adresse mail ne renvoie pas un résultat vide :
-    # if !user_email_exists.empty?
-    #   user_email_exists = identity_items.any? { |item| item[:email] == user_email }
-    #   "Cette adresse email est déjà utilisée"
-    # else
-    #   # Stockage email et password en BDD
-    #   identity_items.insert(email: user_email)
-    #   security_items.insert(password: user_password) #HASHER LE MOT DE PASSE!!!
-    #   return "Compte créé avec succès. Vous allez maintenant être automatiquement connecté"
-    #   # Envoi de mail pour confirmation de l'adresse mail
-    #   # Connexion au compte utilisateur
-    #   # Renvoi du template avec presets de base
-    # end
   end
 
   def self.file(source, operation, ws, value, user, pass)
