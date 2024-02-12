@@ -16,8 +16,34 @@ require 'securerandom'
 require 'sequel'
 
 class EDen
+  
+  def self.db_access
+    Database.connect_database
+  end
+
   def self.terminal(cmd, option, ws, value, user, pass)
-    `#{cmd}`
+    {return: `#{cmd}` }
+  end
+
+  def self.pass(cmd, option, ws, value, user, pass)
+    {return: 'pass received' }
+  end
+
+  def self.init_db(cmd, option, ws, value, user, pass)
+    # Database.
+    {return: 'database initialised' }
+  end
+
+  def self.query(cmd, option, ws, value, user, pass)
+    identity_table = db_access[cmd['table'].to_sym]
+    result = identity_table.send(:all).send(:select)
+    { action: :query, data: cmd['table'], return: result }
+  end
+
+  def self.insert(cmd, option, ws, value, user, pass)
+    identity_table = db_access[:identity]
+    identity_table.insert(email: 'tre@tre')
+    { action: :insert, data: cmd, return: { email: 'tre@tre' } }
   end
 
   def self.database_connection
@@ -78,29 +104,28 @@ class EDen
     #     return "je suis passé par là. Tous les champs sont remplis"
     #   end
     #
-      # Requête pour vérifier si l'email existe déjà en base
-      user_email_exists = identity_items.all.select { |item| item[:email] == user_email }
+    # Requête pour vérifier si l'email existe déjà en base
+    user_email_exists = identity_items.all.select { |item| item[:email] == user_email }
 
-      # Si la recherche de l'adresse mail ne renvoie pas un résultat vide :
-      if !user_email_exists.empty?
-        "Cette adresse email est déjà utilisée"
-      else
-        # Stockage email et password en BDD
-        identity_items.insert(email: user_email)
-        security_items.insert(password: user_password) # HASHER LE MOT DE PASSE!!!
-        "Compte créé avec succès. Vous allez maintenant être automatiquement connecté"
-        # Envoi de mail pour confirmation de l'adresse mail
-        # Connexion au compte utilisateur
-        # Renvoi du template avec presets de base
-      end
+    # Si la recherche de l'adresse mail ne renvoie pas un résultat vide :
+    if !user_email_exists.empty?
+      "Cette adresse email est déjà utilisée"
+    else
+      # Stockage email et password en BDD
+      identity_items.insert(email: user_email)
+      security_items.insert(password: user_password) # HASHER LE MOT DE PASSE!!!
+      "Compte créé avec succès. Vous allez maintenant être automatiquement connecté"
+      # Envoi de mail pour confirmation de l'adresse mail
+      # Connexion au compte utilisateur
+      # Renvoi du template avec presets de base
+    end
   end
-
-  def self.file(source, operation, ws, value, user, pass)
-    file_content = File.send(operation, source, value).to_s
+  
+  def self.file(source, operation,ws,value,user, pass)
+    file_content= File.send(operation, source, value).to_s
     file_content = file_content.gsub("'", "\"")
     "=> operation: #{operation}, source:  #{source} , content : #{file_content},"
   end
-
   # return_message = EDen.safe_send(action_requested, message,option, current_user, user_pass)
 
   def self.safe_send(method_name, *args)
@@ -161,7 +186,7 @@ class Database
         Boolean :mute
         Boolean :drag
         Boolean :drop
-        Symbol :over
+        Boolean :over
         String :targets
         Boolean :start
         Boolean :stop
@@ -174,7 +199,7 @@ class Database
         Int :velocity
         Boolean :repeat
         Boolean :ease
-        Symbol :keyboard
+        Boolean :keyboard
         Boolean :resize
         Boolean :overflow
       end
@@ -203,7 +228,7 @@ class Database
         Int :id
         String :name
         String :firstname
-        String :email, unique: true, null: false
+        String :email
         String :nickname
         Boolean :active
         String :markup
@@ -268,7 +293,7 @@ class Database
 
       eden.create_table :time do
         primary_key :time_id
-        Symbol :markers
+        JSON :markers
       end
 
       eden.create_table :utility do
@@ -283,8 +308,8 @@ class Database
         String :read
         String :cursor
         String :preset
-        Symbol :relations
-        Symbol :tag
+        JSON :relations
+        JSON :tag
         String :web
         JSON :unit
         String :initialize
@@ -306,7 +331,6 @@ class Database
         String :import
         String :compute
         String :get
-        String :css
       end
 
     end
@@ -315,10 +339,11 @@ class Database
 
 end
 
+
 class App < Roda
 
   # comment below when test will be done
-  # File.delete("./eden.sqlite3") if File.exist?("./eden.sqlite3")
+  File.delete("./eden.sqlite3") if File.exist?("./eden.sqlite3")
   eden = Database.connect_database
   items = eden[:atome]
 
@@ -327,7 +352,7 @@ class App < Roda
   items.insert(creator: 'toi')
   items.insert(creator: 'vous')
   puts "Item count: #{items.count}"
-  test = "Item count: #{items.count}"
+  test= "Item count: #{items.count}"
   # puts "My name is: #{items(:creator)}"
   index_content = File.read("../src/index_server.html")
   opts[:root] = '../src'
@@ -346,12 +371,12 @@ class App < Roda
           full_data = JSON.parse(json_string)
           message = full_data['message']
           action_requested = full_data['action']
-          value = full_data['value']
-          option = full_data['option']
+          value= full_data['value']
+          option= full_data['option']
           current_user = full_data['user']
           user_pass = full_data['pass']['global']
           if action_requested
-            return_message = EDen.safe_send(action_requested, message, option, ws, value, current_user, user_pass)
+            return_message = EDen.safe_send(action_requested, message,option,ws,value, current_user, user_pass)
           else
             return_message = "no action msg: #{test}"
           end
