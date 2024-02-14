@@ -80,8 +80,26 @@ connection.touch(true) do
     puts "Veuillez renseigner votre mot de passe."
   else
     # Envoi des données du formulaire au serveur :
-    hashed_password = A.calculate_sha(password_text.data)
-    A.message({ action: :authentification, value: { mail: email_text.data, pass: hashed_password } })
+    # hashed_password = A.calculate_sha(password_text.data)
+    # hashed_password = Black_matter.encode(password_text.data)
+    # puts hashed_password
+    # A.message({ action: :authentification, value: { mail: email_text.data, pass: hashed_password } })
+
+    mail = email_text.data
+    puts 'mail : ' + mail
+    pass = Black_matter.encode(password_text.data)
+    puts 'pass : ' + pass
+    # puts Universe.current_user
+    # puts grab("anonymous").inspect
+    # grab("anonymous").password( { global: :nptkoi, read: { atome: :stahhhr_wars }, write: { atome: :starll_wars } })
+    #
+    # puts grab("anonymous").inspect
+    A.message({ action: :authentication, data: { table: :identity, particle: :email, email: mail } }) do |response|
+      puts "-2 #{response}"
+    end
+    A.message({ action: :authorization, data: { table: :security, particle: :password, password: pass } }) do |response|
+      puts "-1 #{response}"
+    end
   end
 end
 
@@ -107,9 +125,13 @@ creation.touch(true) do
   elsif password_text.data.nil? || password_text.data.strip.empty?
     puts "Veuillez renseigner votre mot de passe."
   else
-    hashed_password = A.calculate_sha(password_text.data)
+    # hashed_password = A.calculate_sha(password_text.data)
+    mail = email_text.data
+    puts 'mail : ' + mail
+    pass = Black_matter.encode(password_text.data)
+    puts 'pass : ' + pass
     # A.message({ action: :account_creation, value: { mail: email_text.data, pass: hashed_password } }) # renvoie la donnée ou une chaine de caractères vide si aucune donnée n'est renseignée
-    A.message({action: :insert, data: {table: :identity, particle: :email, data: email_text.data}})
-    A.message({action: :insert, data: {table: :security, particle: :password, data: hashed_password}})
+    A.message({action: :insert, data: {table: :identity, particle: :email, data: mail}})
+    A.message({action: :insert, data: {table: :security, particle: :password, data: pass}})
   end
 end
