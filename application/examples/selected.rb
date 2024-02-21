@@ -21,10 +21,15 @@ t.touch(true) do
     atome_selected.height=rand(333)
 
   end
-
   b.selected(false)
   puts "3 current_user- #{grab(Universe.current_user).selection}"
   puts "3 - b selected : #{b.selected}"
+
+  grab(Universe.current_user).selection.color(:red)
+  grab(Universe.current_user).selection.each do |el|
+    puts el
+  end
+  puts grab(Universe.current_user).selection.collect
 end
 
 

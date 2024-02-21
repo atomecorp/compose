@@ -25,6 +25,8 @@ b.drag(:locked) do |event|
   y = (clone.top || 0) + dy.to_f
   clone.left(x)
   clone.top(y)
+  puts "x: #{x}"
+  puts "y: #{y}"
 end
 cc.drag({ restrict: {max:{ left: 240, top: 190}} }) do |event|
 
@@ -41,3 +43,5 @@ t=text({data: 'touch me to unbind drag stop for b (clone will not deleted anymor
 t.touch(true) do
   b.drag({remove: :stop})
 end
+
+

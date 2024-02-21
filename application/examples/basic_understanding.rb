@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# The class Universe is used to  retrieve some data needed for the atome framework
+# The class Universe is used to retrieve some data needed for the atome framework
 # per example you can retrieve the list of all available particles
 puts Universe.particle_list
 # this give at the date 14/11/2023 :
@@ -41,9 +41,11 @@ a.width(33)
 a.height(33)
 a.top(33)
 a.left(33)
+a.attach(:view)
 # we can now add a color the atome using  apply  used to apply an atome onto another (please note that color is also an atome not a particle)
 # in this case  we apply the color atome name box_color this a default color created by the system
 a.apply([:box_color])
+
 wait 2 do
   # a bit less efficient and a bit more processor intensive solution is to use the box preset, that render a box too
   b=box
