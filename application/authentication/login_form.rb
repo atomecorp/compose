@@ -96,9 +96,12 @@ def authent_form
                                     color: color(eastern_blue),
                                     # color: color(:white),
                                     pattern: :solid },
-                          text: { data: "Se connecter",
-                                  left: 10,
-                                  color: :black },
+                          text: { int8: {francais: "Se connecter",
+                                         english: "Login"},
+                                  # left: 10,
+                                  color: :black,
+                                  # center: true
+                          },
                           id: :connection_btn
                         })
 
@@ -180,9 +183,9 @@ def authent_form
       # require './template.rb'
       # end
 
-      # form.delete(true)
-      # require './tre/template'
-      # layout
+    #   form.delete(true)
+    #   require './templates/template'
+    #   layout
     end
   end
 
@@ -199,8 +202,10 @@ def authent_form
                         border: { thickness: 2,
                                   color: color(eastern_blue),
                                   pattern: :solid },
-                        text: { data: "Créer un compte",
-                                left: 10, color: :white },
+                        text: { int8: { francais: "Créer un compte",
+                                        english: "Create account"},
+                                left: 10,
+                                color: :white },
                         id: :creation_btn
                       })
 
@@ -226,8 +231,6 @@ def authent_form
 
 end
 
-authent_form
+text.language = :francais
 
-# def rez
-#   box
-# end
+authent_form

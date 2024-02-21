@@ -3,6 +3,13 @@
 # server utils to handle eDen Db
 
 class EDen
+  @@mail = nil
+  @@pass = nil
+
+  def self.sanitize_email(email)
+    invalid_chars_pattern = /[^a-zA-Z0-9.-@]+/
+    email.gsub(invalid_chars_pattern, '')
+  end
 
   def self.db_access
     Database.connect_database
@@ -13,39 +20,56 @@ class EDen
   end
 
   def self.authorization(data, message_id)
-    # { data: { message: 'password received'}, message_id: message_id }
+    # database connexion :
     db = Database.connect_database
-        security_items = db[:security]
-        user_password = data["password"]
-        user_exists = security_items.where(password: user_password).first
+    # retrieving data from the 'security' table
+    security_items = db[:security]
+    # retrieving sent data
+    user_password = data["password"]
+    # database search
+    user_exists = security_items.where(password: user_password).first
 
-        if !user_exists
-          { return: 'Password non trouvé, erreur', message_id: message_id }
-          # Ask to the user if he wants to subscribe
-          # Send the basic template
-        else
-          { return: 'Password trouvé, connection', message_id: message_id }
-          # Send the user account template
-        end
+    if !user_exists
+      puts "password recu : :#{user_password},   @@mail : #{  @@mail} , pass : #{  @@pass}"
+      return { return: 'Password non trouvé, erreur', authorized: false, message_id: message_id }
+    else
+      @@pass = user_password
+      if @@mail && @@pass
+        # reset variables containing mail and password
+        @@mail = nil
+        @@pass = nil
+        return { return: 'logged', authorized: true, message_id: message_id }
+        # Send the user account template
+      else
+        return { return: 'Password trouvé, cherche mdp', authorized: true, message_id: message_id }
+      end
+    end
   end
 
   def self.authentication(data, message_id)
-    # { data: { message: 'login received' }, message_id: message_id }
+    # database connexion :
     db = Database.connect_database
+    # retrieving data from the 'identity' table
     identity_items = db[:identity]
+    # retrieving sent data
     user_email = data["email"]
-    mail_exists = identity_items.where(email: user_email).first
+    # data cleansing of superfluous characters
+    sanitized_email = sanitize_email(user_email)
+    # database search
+    mail_exists = identity_items.where(email: sanitized_email).first
 
     if !mail_exists
-      { return: 'Email non trouvé, erreur', message_id: message_id }
-      # { return: user_email, message_id: message_id }
-      # Ask to the user if he wants to subscribe
-      # Send the basic template
+      return { return: 'Email non trouvé, erreur', authorized: false, message_id: message_id }
     else
-      { return: 'Email trouvé, cherche mdp', message_id: message_id }
-      # Verify password
-      # If password isn't ok, send error
-      # If the password is ok, send the user account template
+      @@mail = user_email
+      if @@mail && @@pass
+        @@mail = nil
+        @@pass = nil
+        return { return: 'logged', authorized: true, message_id: message_id }
+        # Send the user account template
+      else
+        return { return: 'Email trouvé, cherche mdp', authorized: true, message_id: message_id }
+      end
     end
   end
 
@@ -103,7 +127,7 @@ class EDen
       if schema.any? { |col_def| col_def.first == particle }
         identity_table = db_access[table.to_sym]
         identity_table.insert(particle => data)
-        { data: { message: "column : #{particle}, in table : #{table}, updated with : #{data}"}, message_id: message_id }
+        { data: { message: "column : #{particle}, in table : #{table}, updated with : #{data}" }, message_id: message_id }
       else
         { data: { message: "column not found: #{particle.class}" }, message_id: message_id }
       end

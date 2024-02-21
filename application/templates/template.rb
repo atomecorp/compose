@@ -1,12 +1,3 @@
-# b = box({
-#       width: 600,
-#       height: 600,
-#       color: :green,
-#       text: "Template de base"
-#     })
-#
-# grab(:view).add(b)
-
 def layout
     compose_back=box
 
@@ -34,4 +25,5 @@ def form
     end
 
 end
+
 form
