@@ -13,18 +13,20 @@ def authent_form
                right: 0,
                top: 0,
                bottom: 0,
-               height: 704,
-               width: 1536,
-               color: dark_grey
+               height: :auto,
+               width: :auto,
+               color: { red: 0.125, green: 0.125, blue: 0.125 }
+               # color: dark_grey
              })
 
   form = view.box({ width: 500,
                     height: 350,
                     center: true,
-                    color: grey,
+                    color: { red: 0.208, green: 0.208, blue: 0.208 },
+                    # color: grey,
                     smooth: 10
                   })
-  # form.drag({restrict: view.id})
+  form.drag({restrict: view.id})
 
   # FAIRE EN SORTE QUE LE FORM NE PUISSE PAS SORTIR DE LA VIEW QUAND ON LE DRAG!!!!!!!!!
 
@@ -33,7 +35,8 @@ def authent_form
                          height: 50,
                          center: true,
                          top: 50,
-                         color: grey,
+                         color: { red: 0.208, green: 0.208, blue: 0.208 },
+                         # color: grey,
                          # border: { thickness: 2,
                          #           color: color(red: 0.118, green: 0.596, blue: 0.596),
                          #           pattern: :solid },
@@ -44,7 +47,8 @@ def authent_form
                                       height: 2, # Épaisseur de la bordure du bas
                                       bottom: 0, # Positionnement au bas de l'élément principal
                                       top: :auto,
-                                      color: eastern_blue
+                                      color: { red: 0.118, green: 0.596, blue: 0.596 }
+                                      # color: eastern_blue
                                     })
 
   # Nouvel objet email_text, enfant de la box email
@@ -62,7 +66,8 @@ def authent_form
                             height: 50,
                             center: true,
                             top: 150,
-                            color: grey,
+                            color: { red: 0.208, green: 0.208, blue: 0.208 },
+                            # color: grey,
                             # border: { thickness: 1,
                             #           color: color(:black),
                             #           pattern: :solid },
@@ -72,7 +77,8 @@ def authent_form
                                             height: 2, # Épaisseur de la bordure du bas
                                             bottom: 0, # Positionnement au bas de l'élément principal
                                             top: :auto,
-                                            color: eastern_blue
+                                            color: { red: 0.118, green: 0.596, blue: 0.596 }
+                                            # color: eastern_blue
                                           })
 
   # Nouvel objet password_text, enfant de la box password
@@ -93,14 +99,14 @@ def authent_form
                           color: :white,
                           smooth: 5,
                           border: { thickness: 2,
-                                    color: color(eastern_blue),
-                                    # color: color(:white),
+                                    color: color({ red: 0.118, green: 0.596, blue: 0.596 }),
+                                    # color: color(eastern_blue),
                                     pattern: :solid },
                           text: { int8: {francais: "Se connecter",
                                          english: "Login"},
                                   # left: 10,
                                   color: :black,
-                                  # center: true
+                                  center: { x: 30 , y: -1}
                           },
                           id: :connection_btn
                         })
@@ -194,13 +200,15 @@ def authent_form
                         height: 50,
                         left: 340,
                         top: 250,
-                        color: grey,
+                        color: { red: 0.208, green: 0.208, blue: 0.208 },
+                        # color: grey,
                         smooth: 5,
                         # border: { thickness: 1,
                         #           color: color(:black),
                         #           pattern: :solid },
                         border: { thickness: 2,
-                                  color: color(eastern_blue),
+                                  color: color({ red: 0.118, green: 0.596, blue: 0.596 }),
+                                  # color: color(eastern_blue),
                                   pattern: :solid },
                         text: { int8: { francais: "Créer un compte",
                                         english: "Create account"},
