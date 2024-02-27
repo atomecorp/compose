@@ -226,14 +226,12 @@ def authent_form
     elsif password_text.data.nil? || password_text.data.strip.empty?
       puts "Veuillez renseigner votre mot de passe."
     else
-      # hashed_password = A.calculate_sha(password_text.data)
       mail = email_text.data
       puts 'mail : ' + mail
       pass = Black_matter.encode(password_text.data)
       puts 'pass : ' + pass
-      # A.message({ action: :account_creation, value: { mail: email_text.data, pass: hashed_password } }) # renvoie la donnée ou une chaine de caractères vide si aucune donnée n'est renseignée
-      A.message({ action: :insert, data: { table: :identity, particle: :email, data: mail } })
-      A.message({ action: :insert, data: { table: :security, particle: :password, data: pass } })
+      
+      A.message({ action: :insert, data: { table: :user, particles: {email: mail,password: pass} } })
     end
   end
 
