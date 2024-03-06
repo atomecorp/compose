@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+
 # Création du formulaire
 def authent_form
 
@@ -15,28 +16,24 @@ def authent_form
                bottom: 0,
                height: :auto,
                width: :auto,
-               color: { red: 0.125, green: 0.125, blue: 0.125 }
                # color: dark_grey
+               color: dark_grey
              })
 
   form = view.box({ width: 500,
                     height: 350,
                     center: true,
-                    color: { red: 0.208, green: 0.208, blue: 0.208 },
-                    # color: grey,
+                    color: grey,
                     smooth: 10
                   })
-  form.drag({restrict: view.id})
-
-  # FAIRE EN SORTE QUE LE FORM NE PUISSE PAS SORTIR DE LA VIEW QUAND ON LE DRAG!!!!!!!!!
+  # form.drag({restrict: view.id})
 
   # Input email
   email_box = form.box({ width: 400,
                          height: 50,
                          center: true,
                          top: 50,
-                         color: { red: 0.208, green: 0.208, blue: 0.208 },
-                         # color: grey,
+                         color: grey,
                          # border: { thickness: 2,
                          #           color: color(red: 0.118, green: 0.596, blue: 0.596),
                          #           pattern: :solid },
@@ -47,8 +44,7 @@ def authent_form
                                       height: 2, # Épaisseur de la bordure du bas
                                       bottom: 0, # Positionnement au bas de l'élément principal
                                       top: :auto,
-                                      color: { red: 0.118, green: 0.596, blue: 0.596 }
-                                      # color: eastern_blue
+                                      color: eastern_blue
                                     })
 
   # Nouvel objet email_text, enfant de la box email
@@ -66,8 +62,7 @@ def authent_form
                             height: 50,
                             center: true,
                             top: 150,
-                            color: { red: 0.208, green: 0.208, blue: 0.208 },
-                            # color: grey,
+                            color: grey,
                             # border: { thickness: 1,
                             #           color: color(:black),
                             #           pattern: :solid },
@@ -77,8 +72,7 @@ def authent_form
                                             height: 2, # Épaisseur de la bordure du bas
                                             bottom: 0, # Positionnement au bas de l'élément principal
                                             top: :auto,
-                                            color: { red: 0.118, green: 0.596, blue: 0.596 }
-                                            # color: eastern_blue
+                                            color: eastern_blue
                                           })
 
   # Nouvel objet password_text, enfant de la box password
@@ -99,8 +93,7 @@ def authent_form
                           color: :white,
                           smooth: 5,
                           border: { thickness: 2,
-                                    color: color({ red: 0.118, green: 0.596, blue: 0.596 }),
-                                    # color: color(eastern_blue),
+                                    color: eastern_blue,
                                     pattern: :solid },
                           text: { int8: {francais: "Se connecter",
                                          english: "Login"},
@@ -150,40 +143,6 @@ def authent_form
         puts "-1 #{response}"
       end
 
-      # Si l'email et le mdp sont ok, renvoyer le template du user
-      # if email renvoie ok && password renvoie ok
-      # grab(:view).clear(true)
-      #
-      # require 'js'
-      #
-      # # Sélectionner la div avec l'ID 'view'
-      # view_div = JS.global[:document].getElementById('view')
-      #
-      # # Mettre à jour le contenu de la div
-      #
-      # div_form = document.createElement('form')
-      # # div_email =
-      # view_div.appendChild(div_form)
-
-      #     view_div[:innerHTML] = "
-      #  <form>
-      #   <div class=\"mb-3\">
-      #     <label for=\"exampleInputEmail1\" class=\"form-label\">Email address</label>
-      #     <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\">
-      #     <div id=\"emailHelp\" class=\"form-text\">We'll never share your email with anyone else.</div>
-      #   </div>
-      #   <div class=\"mb-3\">
-      #     <label for=\"exampleInputPassword1\" class=\"form-label\">Password</label>
-      #     <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword1\">
-      #   </div>
-      #   <div class=\"mb-3 form-check\">
-      #     <input type=\"checkbox\" class=\"form-check-input\" id=\"exampleCheck1\">
-      #     <label class=\"form-check-label\" for=\"exampleCheck1\">Check me out</label>
-      #   </div>
-      #   <button type=\"submit\" class=\"btn btn-primary\">Submit</button>
-      # </form>
-      # "
-
       # view = grab(:view).add(html_code)
 
       # require './template.rb'
@@ -200,15 +159,13 @@ def authent_form
                         height: 50,
                         left: 340,
                         top: 250,
-                        color: { red: 0.208, green: 0.208, blue: 0.208 },
-                        # color: grey,
+                        color: grey,
                         smooth: 5,
                         # border: { thickness: 1,
                         #           color: color(:black),
                         #           pattern: :solid },
                         border: { thickness: 2,
-                                  color: color({ red: 0.118, green: 0.596, blue: 0.596 }),
-                                  # color: color(eastern_blue),
+                                  color: eastern_blue,
                                   pattern: :solid },
                         text: { int8: { francais: "Créer un compte",
                                         english: "Create account"},
@@ -231,12 +188,12 @@ def authent_form
       pass = Black_matter.encode(password_text.data)
       puts 'pass : ' + pass
       
-      A.message({ action: :insert, data: { table: :user, particles: {email: mail,password: pass} } })
+      A.message({ action: :insert, data: { table: :user, particles: {email: mail, password: pass, user_id: Universe.current_user} } })
     end
   end
 
 end
 
-text.language = :francais
+# text.language = :francais
 
-authent_form
+# authent_form
