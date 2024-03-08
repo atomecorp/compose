@@ -5,6 +5,7 @@
 def authent_form
 
   dark_grey = { red: 0.125, green: 0.125, blue: 0.125 }
+  dark_grey_transparent = { red: 0.125, green: 0.125, blue: 0.125, alpha: 0.7 }
   grey = { red: 0.208, green: 0.208, blue: 0.208 }
   light_grey = { red: 0.5, green: 0.5, blue: 0.5 }
   eastern_blue = { red: 0.118, green: 0.596, blue: 0.596 }
@@ -16,8 +17,7 @@ def authent_form
                bottom: 0,
                height: :auto,
                width: :auto,
-               # color: dark_grey
-               color: dark_grey
+               color: dark_grey_transparent
              })
 
   form = view.box({ width: 500,
@@ -27,6 +27,31 @@ def authent_form
                     smooth: 10
                   })
   # form.drag({restrict: view.id})
+
+  cancel = form.box({
+                      width: 25,
+                      height: 25,
+                      top: 25,
+                      left: 450,
+                      id: :tretre
+                    })
+
+  # cancel.text({data: :X,
+  #              component: { size: 25 },
+  #              left: 5,
+  #              top: -7,
+  #              color: :dark_grey})
+
+  # DOESN'T WORk!!!
+  view.touch(true) do |event|
+    # Vérifiez si l'événement est déclenché par la vue elle-même et non par un enfant
+    view.delete(true) if event.target == view
+  end
+
+
+  cancel.touch(true) do
+    view.delete(true)
+  end
 
   # Input email
   email_box = form.box({ width: 400,
@@ -121,36 +146,48 @@ def authent_form
     elsif password_text.data.nil? || password_text.data.strip.empty?
       puts "Veuillez renseigner votre mot de passe."
     else
-      # Envoi des données du formulaire au serveur :
-      # hashed_password = A.calculate_sha(password_text.data)
-      # hashed_password = Black_matter.encode(password_text.data)
-      # puts hashed_password
-      # A.message({ action: :authentification, value: { mail: email_text.data, pass: hashed_password } })
 
       mail = email_text.data
       puts 'mail : ' + mail
       pass = Black_matter.encode(password_text.data)
       puts 'pass : ' + pass
-      # puts Universe.current_user
-      # puts grab("anonymous").inspect
-      # grab("anonymous").password( { global: :nptkoi, read: { atome: :stahhhr_wars }, write: { atome: :starll_wars } })
-      #
-      # puts grab("anonymous").inspect
-      A.message({ action: :authentication, data: { table: :identity, particle: :email, email: mail } }) do |response|
-        puts "-2 #{response}"
-      end
-      A.message({ action: :authorization, data: { table: :security, particle: :password, password: pass } }) do |response|
-        puts "-1 #{response}"
-      end
 
-      # view = grab(:view).add(html_code)
-
-      # require './template.rb'
+      # A.message({ action: :authentication, data: { table: :user, particles: {email: mail, password: pass} } }) do |response|
+      #   puts "authentication : #{response}"
       # end
 
-    #   form.delete(true)
-    #   require './templates/template'
-    #   layout
+      mail_message = false
+      password_message = false
+
+      A.message({ action: :authentication, data: { table: :user, particles: {email: mail} } }) do |response|
+        puts "Full authentication response: #{response.inspect}"
+        if response.key?('mail_authorized')
+          # Logique si 'authorized' est présent dans la réponse
+          puts "response mail authorized: #{response['mail_authorized']}"
+          # Si le mail et le password sont ok, on log le user et on stocke l'info en local storage
+          mail_message = JS.global[:localStorage].setItem('logged', response['mail_authorized'])
+        else
+          # Gestion du cas où 'authorized' est absent
+        end
+        
+      end
+
+      A.message({ action: :authorization, data: { table: :user, particles: {password: pass} } }) do |response|
+        puts "authorization : #{response}"
+        authorized = response['password_authorized'] || false  # Utilisez false comme valeur par défaut si 'authorized' est absent
+        puts "response password : #{response['password_authorized']}"
+        # Si le mail et le password sont ok, on log le user et on stocke l'info en local storage
+        password_message = JS.global[:localStorage].setItem('logged', response['password_authorized'])
+      end
+
+      # On efface le formulaire si le serveur renvoie que l'user est loggué
+      if mail_message == true || password_message == true
+        view.delete(true)
+        puts 'deleted!'
+        # JS.global[:localStorage].setItem('user_id',response['user_id'])
+        # puts "response user_id : #{response['user_id']}"
+      end
+
     end
   end
 
