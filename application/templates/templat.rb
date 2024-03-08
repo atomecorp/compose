@@ -40,6 +40,19 @@ navigation_button.touch(true) do
   authent_form
 end
 
+logout_button = box(width: 150,
+                    height: 80,
+                    top: 50,
+                    left: 500,
+                    color: :red)
+
+logout_button.text({text: "Log out",
+                       color: :black})
+
+logout_button.touch(true) do
+  JS.global[:localStorage].setItem('logged', 'false')
+end
+
 
 
 
