@@ -159,7 +159,7 @@ def authent_form
       mail_message = false
       mail_response = nil
       password_message = false
-      password_response = false
+      password_response = nil
 
       A.message({ action: :authentication, data: { table: :user, particles: {email: mail} } }) do |response|
         puts "Full authentication response: #{response.inspect}"
@@ -178,7 +178,7 @@ def authent_form
 
       A.message({ action: :authorization, data: { table: :user, particles: {password: pass} } }) do |response|
         puts "authorization : #{response}"
-        if response.key?('mail_authorized')
+        if response.key?('password_authorized')
         authorized = response['password_authorized'] || false  # Utilisez false comme valeur par défaut si 'authorized' est absent
         puts "response password : #{response['password_authorized']}"
         # Si le mail et le password sont ok, on log le user et on stocke l'info en local storage
@@ -191,7 +191,7 @@ def authent_form
       end
 
       # On efface le formulaire si le serveur renvoie que l'user est loggé
-      if mail_response == "true" && password_response == "true"
+      if (mail_response == "true" && password_response == "true")
         view.delete(true)
         puts 'deleted!'
         # JS.global[:localStorage].setItem('user_id',response['user_id'])

@@ -48,7 +48,7 @@ class EDen
             return { return: 'logged', mail_authorized: true, user_id: mail_exists["user_id"], message_id: message_id }
             # Send the user account template
           else
-            return { return: 'Email trouvé, cherche mdp', mail_authorized: true, message_id: message_id }
+            return { return: 'Email trouvé, cherche mdp', mail_authorized: false, message_id: message_id }
           end
       end
     end
@@ -75,7 +75,7 @@ class EDen
             return { return: 'logged', password_authorized: true, user_id: user_exists["user_id"], message_id: message_id }
             # Send the user account template
           else
-            return { return: 'Password trouvé, cherche mdp', password_authorized: true, message_id: message_id }
+            return { return: 'Password trouvé, cherche mdp', password_authorized: false, message_id: message_id }
           end
       end
     end
