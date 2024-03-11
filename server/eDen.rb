@@ -20,6 +20,7 @@ class EDen
     end
 
     def sanitize_email(email)
+      puts "email : #{email}"
       invalid_chars_pattern = /[^a-zA-Z0-9.-@]+/
       email.gsub(invalid_chars_pattern, '')
     end
@@ -36,20 +37,25 @@ class EDen
       # database search
       mail_exists = identity_items.where(email: sanitized_email).first
       # mail_exists = identity_items.where(email: user_email).first
-
+      puts 'ok'
       if !mail_exists
+        @@pass = nil
+        puts "authentication @@pass : #{@@pass}"
+        return { return: 'Email non trouvé, erreur', message_id: message_id }
+      else
+        @@mail = user_email
+        puts "authentication @@mail du else : #{@@mail}"
+        puts "authentication @@pass du else : #{@@pass}"
+        if @@mail && @@pass
+          puts "authentication @@mail du else v2 : #{@@mail}"
+          puts "authentication @@pass du else v2 : #{@@pass}"
+          @@mail = nil
           @@pass = nil
-          return { return: 'Email non trouvé, erreur', message_id: message_id }
+          return { return: 'logged', mail_authorized: true, user_id: mail_exists[:user_id], message_id: message_id }
+          # Send the user account template
         else
-          @@mail = user_email
-          if @@mail && @@pass
-            @@mail = nil
-            @@pass = nil
-            return { return: 'logged', mail_authorized: true, user_id: mail_exists["user_id"], message_id: message_id }
-            # Send the user account template
-          else
-            return { return: 'Email trouvé, cherche mdp', mail_authorized: false, message_id: message_id }
-          end
+          return { return: 'Email trouvé, cherche mdp', mail_authorized: false, message_id: message_id }
+        end
       end
     end
 
@@ -62,21 +68,28 @@ class EDen
       user_password = data["particles"]["password"]
       # database search
       user_exists = security_items.where(password: user_password).first
+      puts "user_exists : #{user_exists}"
 
       if !user_exists
+        @@mail = nil
+        puts "authorization @@mail du else : #{@@mail}"
+        return { return: 'Password non trouvé, erreur', message_id: message_id }
+      else
+        @@pass = user_password
+        puts "authorization @@pass : #{@@pass}"
+        puts "authorization @@mail du else : #{@@mail}"
+        if @@mail && @@pass
+          puts "authorization @@pass v2 : #{@@pass}"
+          puts "authorization @@mail du else v2 : #{@@mail}"
+          # reset variables containing mail and password
           @@mail = nil
-          return { return: 'Password non trouvé, erreur', message_id: message_id }
+          @@pass = nil
+          # return { return: 'Password trouvé, cherche mdp', password_authorized: false, message_id: message_id }
+          return { return: 'logged', password_authorized: true, user_id: user_exists[:user_id], message_id: message_id }
+          # Send the user account template
         else
-          @@pass = user_password
-          if @@mail && @@pass
-            # reset variables containing mail and password
-            @@mail = nil
-            @@pass = nil
-            return { return: 'logged', password_authorized: true, user_id: user_exists["user_id"], message_id: message_id }
-            # Send the user account template
-          else
-            return { return: 'Password trouvé, cherche mdp', password_authorized: false, message_id: message_id }
-          end
+          return { return: 'Password trouvé, cherche mdp', password_authorized: false, message_id: message_id }
+        end
       end
     end
 

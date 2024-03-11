@@ -190,13 +190,13 @@ def authent_form
         end
       end
 
-      # On efface le formulaire si le serveur renvoie que l'user est loggé
-      if (mail_response == "true" && password_response == "true")
-        view.delete(true)
-        puts 'deleted!'
-        # JS.global[:localStorage].setItem('user_id',response['user_id'])
-        # puts "response user_id : #{response['user_id']}"
-      end
+      # # On efface le formulaire si le serveur renvoie que l'user est loggé
+      # if (mail_response == "true" && password_response == "true")
+      #   view.delete(true)
+      #   puts 'deleted!'
+      #   # JS.global[:localStorage].setItem('user_id',response['user_id'])
+      #   # puts "response user_id : #{response['user_id']}"
+      # end
 
     end
   end
