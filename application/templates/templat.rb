@@ -51,6 +51,8 @@ logout_button.text({text: "Log out",
 
 logout_button.touch(true) do
   JS.global[:localStorage].setItem('logged', 'false')
+  JS.global[:localStorage].removeItem('user_id')
+  # JS.global[:localStorage].setItem('user_id', user_id)
 end
 
 

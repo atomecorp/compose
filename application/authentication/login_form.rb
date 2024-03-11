@@ -170,6 +170,9 @@ def authent_form
           mail_message = JS.global[:localStorage].setItem('logged', response['mail_authorized'])
           mail_response = response['mail_authorized']
           puts "mail_response : #{mail_response}"
+          # On efface le formulaire si le serveur renvoie que l'user est loggé
+          view.delete(true)
+          JS.global[:localStorage].setItem('user_id', response['user_id'])
         else
           # Gestion du cas où 'authorized' est absent
         end
@@ -185,13 +188,16 @@ def authent_form
         password_message = JS.global[:localStorage].setItem('logged', response['password_authorized'])
         password_response = response['password_authorized']
         puts "password_response : #{password_response}"
+        # On efface le formulaire si le serveur renvoie que l'user est loggé
+        view.delete(true)
+        JS.global[:localStorage].setItem('user_id', response['user_id'])
         else
           # Gestion du cas où 'authorized' est absent
         end
       end
 
-      # # On efface le formulaire si le serveur renvoie que l'user est loggé
-      # if (mail_response == "true" && password_response == "true")
+      # # # On efface le formulaire si le serveur renvoie que l'user est loggé
+      # if (mail_response == "true" || password_response == "true")
       #   view.delete(true)
       #   puts 'deleted!'
       #   # JS.global[:localStorage].setItem('user_id',response['user_id'])
