@@ -1,18 +1,32 @@
-# On récupère le user_id déjà stocké en local storage
-user_stocked = JS.global[:localStorage].getItem('user_id')
-puts "user stocked : #{user_stocked}"
+#  On récupère le current_user généré automatiquementau lancement de l'application
+current_user = Universe.current_user
+puts "current_user : #{current_user}"
 
+anonymous_id = JS.global[:localStorage].getItem('anonymous_id')
+puts "user anonymous_id : #{anonymous_id}"
 # Si aucun user_id n'est stocké localement
-if !user_stocked
+if !anonymous_id
+  # On récupère le user_id généré à l'ouverture de l'application
+  anonymous_id = Universe.current_user
+  puts "new anonymous_id : #{anonymous_id}"
+  # On stocke ce user_id dans le local storage
+  JS.global[:localStorage].setItem('anonymous_id', anonymous_id)
+end
+
+# On récupère le user_id déjà stocké en local storage
+user_id = JS.global[:localStorage].getItem('user_id')
+puts "user stocked : #{user_id}"
+# Si aucun user_id n'est stocké localement
+if !user_id
   # On récupère le user_id généré à l'ouverture de l'application
   user_id = Universe.current_user
   puts "new user_id : #{user_id}"
   # On stocke ce user_id dans le local storage
   JS.global[:localStorage].setItem('user_id', user_id)
-else
-  # Sinon on récupère celui déjà stocké en local storage
-  user_id = user_stocked
-  puts "user_id du else : #{user_id}"
+# else
+#   # Sinon on récupère celui déjà stocké en local storage
+#   user_id = user_stocked
+#   puts "user_id du else : #{user_id}"
 end
 
 # Bouton pour créer un nouvel atome et lui attribuer l'id du current_user
@@ -23,6 +37,7 @@ puts 'createur : ' + box1.creator
 
 box1.touch(true) do
   box1.color(:red)
+  user_id = JS.global[:localStorage].getItem('user_id')
   # On crée un nouvel atome et on lui attribue l'id du current_user comme creator
   c = circle(creator: user_id, color: :green, top: 200, left: 200, width: 250, height: 80)
   c.text('creator : ' + user_id)
@@ -51,7 +66,7 @@ logout_button.text({text: "Log out",
 
 logout_button.touch(true) do
   JS.global[:localStorage].setItem('logged', 'false')
-  JS.global[:localStorage].removeItem('user_id')
+  JS.global[:localStorage].setItem('user_id', anonymous_id)
   # JS.global[:localStorage].setItem('user_id', user_id)
 end
 

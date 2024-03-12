@@ -8,8 +8,8 @@ class EDen
   @@pass = nil
   class << self
 
-    # @@mail = nil
-    # @@pass = nil
+    @@mail = nil
+    @@pass = nil
 
     def db_access
       Database.db_access
@@ -20,7 +20,6 @@ class EDen
     end
 
     def sanitize_email(email)
-      puts "email : #{email}"
       invalid_chars_pattern = /[^a-zA-Z0-9.-@]+/
       email.gsub(invalid_chars_pattern, '')
     end
