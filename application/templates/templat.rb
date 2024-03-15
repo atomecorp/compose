@@ -3,49 +3,58 @@ current_user = Universe.current_user
 puts "current_user : #{current_user}"
 
 anonymous_id = JS.global[:localStorage].getItem('anonymous_id')
-puts "user anonymous_id : #{anonymous_id}"
-# Si aucun user_id n'est stocké localement
+puts "anonymous_id : #{anonymous_id}"
+
+# On récupère le current_user déjà stocké en local storage
+current_user = JS.global[:localStorage].getItem('current_user')
+puts "current_user : #{current_user}"
+
+# Si l’id du compte anonyme égale celui du current user, ça veut dire que l’utilisateur précédent était un utilisateur anonyme, donc il faut supprimer son historique.
+# Mais il faut garder l’historique des utilisateurs qui auraient pu se connecter et se déconnecter entre-temps!!!
+if current_user == anonymous_id
+  JS.global[:localStorage].clear
+  puts "local storage cleared!"
+end
+
+# Si aucun current_user n'est stocké localement
 if !anonymous_id
-  # On récupère le user_id généré à l'ouverture de l'application
+  # On récupère le current_user généré à l'ouverture de l'application
   anonymous_id = Universe.current_user
   puts "new anonymous_id : #{anonymous_id}"
-  # On stocke ce user_id dans le local storage
+  # On stocke ce current_user dans le local storage
   JS.global[:localStorage].setItem('anonymous_id', anonymous_id)
 end
 
-# On récupère le user_id déjà stocké en local storage
-user_id = JS.global[:localStorage].getItem('user_id')
-puts "user stocked : #{user_id}"
-# Si aucun user_id n'est stocké localement
-if !user_id
-  # On récupère le user_id généré à l'ouverture de l'application
-  user_id = Universe.current_user
-  puts "new user_id : #{user_id}"
-  # On stocke ce user_id dans le local storage
-  JS.global[:localStorage].setItem('user_id', user_id)
+# Si aucun current_user n'est stocké localement
+if !current_user
+  # On récupère le current_user généré à l'ouverture de l'application
+  current_user = Universe.current_user
+  puts "new current_user : #{current_user}"
+  # On stocke ce current_user dans le local storage
+  JS.global[:localStorage].setItem('current_user', current_user)
 # else
 #   # Sinon on récupère celui déjà stocké en local storage
-#   user_id = user_stocked
-#   puts "user_id du else : #{user_id}"
+#   current_user = user_stocked
+#   puts "current_user du else : #{current_user}"
 end
 
 # Bouton pour créer un nouvel atome et lui attribuer l'id du current_user
-box1 = box(creator: user_id, width: 300)
+box1 = box(creator: current_user, width: 300)
 box1.text("Creer un atome").center(true)
 
 puts 'createur : ' + box1.creator
 
 box1.touch(true) do
   box1.color(:red)
-  user_id = JS.global[:localStorage].getItem('user_id')
+  current_user = JS.global[:localStorage].getItem('current_user')
   # On crée un nouvel atome et on lui attribue l'id du current_user comme creator
-  c = circle(creator: user_id, color: :green, top: 200, left: 200, width: 250, height: 80)
-  c.text('creator : ' + user_id)
+  c = circle(creator: current_user, color: :green, top: 200, left: 200, width: 250, height: 80)
+  c.text('creator : ' + current_user)
   puts 'createur de c : ' + c.creator
 end
 
 
-navigation_button = box(creator: user_id, width: 300, height: 100, top: 500, left: 50)
+navigation_button = box(creator: current_user, width: 300, height: 100, top: 500, left: 50)
 navigation_button.text("Aller au formulaire d'inscription").center(true)
 
 # Apparition du formulaire d'inscription quand on appuie sur le bouton correspondant
@@ -66,8 +75,8 @@ logout_button.text({text: "Log out",
 
 logout_button.touch(true) do
   JS.global[:localStorage].setItem('logged', 'false')
-  JS.global[:localStorage].setItem('user_id', anonymous_id)
-  # JS.global[:localStorage].setItem('user_id', user_id)
+  JS.global[:localStorage].setItem('current_user', anonymous_id)
+  # JS.global[:localStorage].setItem('current_user', current_user)
 end
 
 

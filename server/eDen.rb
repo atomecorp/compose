@@ -52,6 +52,7 @@ class EDen
           @@pass = nil
           return { return: 'logged', mail_authorized: true, user_id: mail_exists[:user_id], message_id: message_id }
           # Send the user account template
+          # mail_and_pass_verification(mail_exists, @@mail, @@pass)
         else
           return { return: 'Email trouvé, cherche mdp', mail_authorized: false, message_id: message_id }
         end
@@ -86,10 +87,19 @@ class EDen
           # return { return: 'Password trouvé, cherche mdp', password_authorized: false, message_id: message_id }
           return { return: 'logged', password_authorized: true, user_id: user_exists[:user_id], message_id: message_id }
           # Send the user account template
+          # mail_and_pass_verification(user_exists, @@mail, @@pass, message_id)
         else
           return { return: 'Password trouvé, cherche mdp', password_authorized: false, message_id: message_id }
         end
       end
+    end
+
+    def mail_and_pass_verification(data_exists, mail, pass, message_id)
+      mail = nil
+      pass = nil
+      puts "mail_nil : #{mail}"
+      puts "pass_nil : #{pass}"
+      return { return: 'logged', mail_authorized: true, user_id: data_exists[:user_id], message_id: message_id }
     end
 
     def localstorage(data, message_id)
