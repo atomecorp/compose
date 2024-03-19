@@ -81,6 +81,12 @@ def authent_form
                                 id: :email_text_id
                               })
 
+  email_error_message = form.text({data: "",
+                                   left: 20,
+                                   top: 115,
+                                   color: :red,})
+  puts "input email error text : #{email_error_message.data}"
+
   # Input Password
   password_box = form.box({ width: 400,
                             height: 50,
@@ -108,6 +114,12 @@ def authent_form
                                       color: :white,
                                       id: :password_text_id,
                                     })
+
+  password_error_message = form.text({data: "",
+                                   left: 10,
+                                   top: 210,
+                                   color: :red,})
+  puts "input password error text : #{password_error_message.data}"
 
   # Bouton connexion
   connection = form.box({ width: 100,
@@ -174,12 +186,19 @@ def authent_form
   end
 
   connection.touch(true) do
+    # On efface le message d'erreur de l'input email s'il y en a un
+    email_error_message.data = ""
+    password_error_message.data = ""
     # Vérification que les champs email et password ne sont pas envoyés vides :
     if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
+      email_error_message.data = "Veuillez renseigner votre adresse email"
+      password_error_message.data = "Veuillez renseigner votre mot de passe"
       puts "Veuillez renseigner votre adresse email et votre mot de passe."
     elsif email_text.data.nil? || email_text.data.strip.empty?
+      email_error_message.data = "Veuillez renseigner votre adresse email"
       puts "Veuillez renseigner votre adresse email."
     elsif password_text.data.nil? || password_text.data.strip.empty?
+      password_error_message.data = "Veuillez renseigner votre mot de passe"
       puts "Veuillez renseigner votre mot de passe."
     else
 
@@ -267,21 +286,20 @@ def authent_form
                         id: :creation_btn
                       })
 
-  wrong_email_format = form.text({data: "",
-                                  left: 20,
-                                  top: 115,
-                                  color: :red,})
-  puts "blabla : #{wrong_email_format.data}"
-
   creation.touch(true) do
-    # On efface le message d'erreur du format d'email
-    wrong_email_format.data = ""
+    # On efface le message d'erreur de l'input email s'il y en a un
+    email_error_message.data = ""
+    password_error_message.data = ""
     # Vérification que les champs email et password ne sont pas envoyés vides :
     if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
+      email_error_message.data = "Veuillez renseigner votre adresse email"
+      password_error_message.data = "Veuillez renseigner votre mot de passe"
       puts "Veuillez renseigner votre adresse email et votre mot de passe."
     elsif email_text.data.nil? || email_text.data.strip.empty?
+      email_error_message.data = "Veuillez renseigner votre adresse email"
       puts "Veuillez renseigner votre adresse email."
     elsif password_text.data.nil? || password_text.data.strip.empty?
+      password_error_message.data = "Veuillez renseigner votre mot de passe"
       puts "Veuillez renseigner votre mot de passe."
     else
       mail = email_text.data
@@ -289,12 +307,9 @@ def authent_form
 
       # On vérifie le format de l'email
       if !valid_email_format?(mail)
-        wrong_email_format.data = "L'adresse email n'est pas valide"
-        puts "L'adresse email n'est pas valide."
-        
         # Gérez l'erreur de format d'email ici (afficher un message à l'utilisateur, par exemple)
-
-
+        email_error_message.data = "L'adresse email n'est pas valide"
+        puts "L'adresse email n'est pas valide."
       else
         # Si le format de l'email est valide,
         # On vérifie si l'email existe déjà en base
@@ -303,13 +318,13 @@ def authent_form
         puts "tretre : #{tretre}"
 
         if email_exists
+          email_error_message.data = "L'email existe déjà. Veuillez en choisir un autre"
           puts "L'email existe déjà. Veuillez en choisir un autre."
         else
           #   L'email n'existe pas en base, on peut insert les données
           pass = Black_matter.encode(password_text.data)
           puts 'pass : ' + pass
           anon_id = JS.global[:localStorage].getItem('anonymous_id')
-
           # On insère le nouveau user en base
           A.message({ action: :insert, data: { table: :user, particles: { email: mail, password: pass, user_id: anon_id } } })
           # On log le user
