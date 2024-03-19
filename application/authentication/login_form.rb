@@ -1,5 +1,6 @@
 # encoding: UTF-8
 
+# require_relative '../../../server/eDen.rb'
 
 # Création du formulaire
 def authent_form
@@ -46,7 +47,6 @@ def authent_form
     # Vérifiez si l'événement est déclenché par la vue elle-même et non par un enfant
     view.delete(true) if event.target == view
   end
-
 
   cancel.touch(true) do
     view.delete(true)
@@ -119,11 +119,11 @@ def authent_form
                           border: { thickness: 2,
                                     color: eastern_blue,
                                     pattern: :solid },
-                          text: { int8: {francais: "Se connecter",
-                                         english: "Login"},
+                          text: { int8: { francais: "Se connecter",
+                                          english: "Login" },
                                   # left: 10,
                                   color: :black,
-                                  center: { x: 30 , y: -1}
+                                  center: { x: 30, y: -1 }
                           },
                           id: :connection_btn
                         })
@@ -137,7 +137,7 @@ def authent_form
   end
 
   def connect(mail, pass)
-    A.message({ action: :authentication, data: { table: :user, particles: {email: mail} } }) do |response|
+    A.message({ action: :authentication, data: { table: :user, particles: { email: mail } } }) do |response|
       puts "Full authentication response: #{response.inspect}"
       if response.key?('mail_authorized') && response['mail_authorized'] == true
         # Logique si 'authorized' est présent dans la réponse
@@ -154,10 +154,10 @@ def authent_form
       end
     end
 
-    A.message({ action: :authorization, data: { table: :user, particles: {password: pass} } }) do |response|
+    A.message({ action: :authorization, data: { table: :user, particles: { password: pass } } }) do |response|
       puts "authorization : #{response}"
       if response.key?('password_authorized')
-        authorized = response['password_authorized'] || false  # On utilise false comme valeur par défaut si 'authorized' est absent
+        authorized = response['password_authorized'] || false # On utilise false comme valeur par défaut si 'authorized' est absent
         puts "response password : #{response['password_authorized']}"
         # Si le mail et le password sont ok, on log le user et on stocke l'info en local storage
         password_message = JS.global[:localStorage].setItem('logged', response['password_authorized'])
@@ -170,9 +170,9 @@ def authent_form
         # Gestion du cas où 'authorized' est absent
       end
     end
-    
+
   end
-  
+
   connection.touch(true) do
     # Vérification que les champs email et password ne sont pas envoyés vides :
     if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
@@ -196,7 +196,7 @@ def authent_form
       mail_response = nil
       password_message = false
       password_response = nil
-      
+
       connect(mail, pass)
 
       # A.message({ action: :authentication, data: { table: :user, particles: {email: mail} } }) do |response|
@@ -261,13 +261,21 @@ def authent_form
                                   color: eastern_blue,
                                   pattern: :solid },
                         text: { int8: { francais: "Créer un compte",
-                                        english: "Create account"},
+                                        english: "Create account" },
                                 left: 10,
                                 color: :white },
                         id: :creation_btn
                       })
 
+  wrong_email_format = form.text({data: "",
+                                  left: 20,
+                                  top: 115,
+                                  color: :red,})
+  puts "blabla : #{wrong_email_format.data}"
+
   creation.touch(true) do
+    # On efface le message d'erreur du format d'email
+    wrong_email_format.data = ""
     # Vérification que les champs email et password ne sont pas envoyés vides :
     if (email_text.data.nil? || email_text.data.strip.empty?) && (password_text.data.nil? || password_text.data.strip.empty?)
       puts "Veuillez renseigner votre adresse email et votre mot de passe."
@@ -278,17 +286,52 @@ def authent_form
     else
       mail = email_text.data
       puts 'mail : ' + mail
-      pass = Black_matter.encode(password_text.data)
-      puts 'pass : ' + pass
-      anon_id = JS.global[:localStorage].getItem('anonymous_id')
-      
-      # On insère le nouveau user en base
-      A.message({ action: :insert, data: { table: :user, particles: {email: mail, password: pass, user_id: anon_id} } })
-      # On log le user
-      connect(mail, pass)
-      # On génère un nouvel id pour l'anonyme.
-      JS.global[:localStorage].setItem('anonymous_id', identity_generator)
+
+      # On vérifie le format de l'email
+      if !valid_email_format?(mail)
+        wrong_email_format.data = "L'adresse email n'est pas valide"
+        puts "L'adresse email n'est pas valide."
+        
+        # Gérez l'erreur de format d'email ici (afficher un message à l'utilisateur, par exemple)
+
+
+      else
+        # Si le format de l'email est valide,
+        # On vérifie si l'email existe déjà en base
+        # email_exists = email_exist?(mail)
+        tretre = A.message({ action: :email_exist}, data: {email: :mail})
+        puts "tretre : #{tretre}"
+
+        if email_exists
+          puts "L'email existe déjà. Veuillez en choisir un autre."
+        else
+          #   L'email n'existe pas en base, on peut insert les données
+          pass = Black_matter.encode(password_text.data)
+          puts 'pass : ' + pass
+          anon_id = JS.global[:localStorage].getItem('anonymous_id')
+
+          # On insère le nouveau user en base
+          A.message({ action: :insert, data: { table: :user, particles: { email: mail, password: pass, user_id: anon_id } } })
+          # On log le user
+          connect(mail, pass)
+          # On génère un nouvel id pour l'anonyme.
+          JS.global[:localStorage].setItem('anonymous_id', identity_generator)
+        end
+      end
     end
+  end
+
+  def valid_email_format?(email)
+    email_pattern = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+    email_pattern.match?(email)
+  end
+
+  def email_exist?(mail)
+    db = db_access
+    user_table = db[:user]
+    sanitized_email = sanitized_email(mail)
+    user = user_table.where(email: sanitized_email).first
+    !user.nil? # Retourne true si l'email existe déjà
   end
 
 end
