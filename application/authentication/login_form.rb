@@ -81,10 +81,10 @@ def authent_form
                                 id: :email_text_id
                               })
 
-  email_error_message = form.text({data: "",
-                                   left: 20,
-                                   top: 115,
-                                   color: :red,})
+  email_error_message = form.text({ data: "",
+                                    left: 20,
+                                    top: 115,
+                                    color: :red, })
   puts "input email error text : #{email_error_message.data}"
 
   # Input Password
@@ -115,10 +115,10 @@ def authent_form
                                       id: :password_text_id,
                                     })
 
-  password_error_message = form.text({data: "",
-                                   left: 10,
-                                   top: 210,
-                                   color: :red,})
+  password_error_message = form.text({ data: "",
+                                       left: 10,
+                                       top: 210,
+                                       color: :red, })
   puts "input password error text : #{password_error_message.data}"
 
   # Bouton connexion
@@ -314,23 +314,34 @@ def authent_form
         # Si le format de l'email est valide,
         # On vérifie si l'email existe déjà en base
         # email_exists = email_exist?(mail)
-        tretre = A.message({ action: :email_exist}, data: {email: :mail})
-        puts "tretre : #{tretre}"
 
-        if email_exists
-          email_error_message.data = "L'email existe déjà. Veuillez en choisir un autre"
-          puts "L'email existe déjà. Veuillez en choisir un autre."
-        else
-          #   L'email n'existe pas en base, on peut insert les données
-          pass = Black_matter.encode(password_text.data)
-          puts 'pass : ' + pass
-          anon_id = JS.global[:localStorage].getItem('anonymous_id')
-          # On insère le nouveau user en base
-          A.message({ action: :insert, data: { table: :user, particles: { email: mail, password: pass, user_id: anon_id } } })
-          # On log le user
-          connect(mail, pass)
-          # On génère un nouvel id pour l'anonyme.
-          JS.global[:localStorage].setItem('anonymous_id', identity_generator)
+        A.message({ action: :email_exist, data: { email: mail } }) do |response|
+          begin
+            puts "response['data']['email_exist'] : #{response['data']['email_exist']}"
+            # if response.is_a?(Hash) && response.key?('email_exist')
+            if response.is_a?(Hash)
+              puts ' hi '
+              if response['data']['email_exist'] == true
+                email_error_message.data = "L' email est déjà utilisé.Veuillez en choisir un autre "
+                puts " L 'email existe déjà. Veuillez en choisir un autre."
+              else
+                #   L' email n 'existe pas en base, on peut insert les données
+                pass = Black_matter.encode(password_text.data)
+                puts ' pass : ' + pass
+                anon_id = JS.global[:localStorage].getItem('anonymous_id')
+                # On insère le nouveau user en base
+                A.message({ action: :insert, data: { table: :user, particles: { email: mail, password: pass, user_id: anon_id } } })
+                # On log le user
+                connect(mail, pass)
+                # On génère un nouvel id pour l' anonyme.
+                JS.global[:localStorage].setItem('anonymous_id', identity_generator)
+              end
+            else
+              puts "Réponse inattendue du serveur : #{response.inspect}"
+            end
+          rescue => e
+            puts "Une erreur est survenue lors de la vérification de l'email : #{e.message}"
+          end
         end
       end
     end

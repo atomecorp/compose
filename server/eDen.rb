@@ -135,12 +135,23 @@ class EDen
       { data: { table: data['table'], infos: result }, message_id: message_id }
     end
 
-    def email_exist(mail)
+    def email_exist(data, message_id)
+      mail = data["email"]
+      puts "mail : #{mail}"
       db = db_access
+      puts "db : #{db}"
       user_table = db[:user]
-      sanitized_email = sanitized_email(mail)
+      puts "user_table : #{user_table}"
+      sanitized_email = sanitize_email(mail)
+      puts "sanitized_email : #{sanitized_email}"
       user = user_table.where(email: sanitized_email).first
-      !user.nil? # Retourne true si l'email existe déjà
+      puts "user : #{user}"
+      # Construit la réponse indiquant si l'email existe ou non
+      email_exists_response = !user.nil?
+      puts "email_exists_response : #{email_exists_response}"
+       # Retourne la réponse
+      { data: {email_exist: email_exists_response}, message_id: message_id }
+      
     end
 
     def insert(data, message_id)
