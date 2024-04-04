@@ -57,7 +57,7 @@ class EDen
         end
       end
     end
-
+    
     def authorization(data, message_id)
       # database connexion :
       db = db_access
@@ -67,24 +67,21 @@ class EDen
       user_password = data["particles"]["password"]
       # database search
       user_exists = security_items.where(password: user_password).first
-      puts "user_exists : #{user_exists}"
-
       if !user_exists
         @@mail = nil
-        puts "authorization @@mail du else : #{@@mail}"
         return { return: 'Password non trouvé, erreur', message_id: message_id }
       else
         @@pass = user_password
-        puts "authorization @@pass : #{@@pass}"
-        puts "authorization @@mail du else : #{@@mail}"
         if @@mail && @@pass
-          puts "authorization @@pass v2 : #{@@pass}"
-          puts "authorization @@mail du else v2 : #{@@mail}"
           # reset variables containing mail and password
           @@mail = nil
           @@pass = nil
-          # return { return: 'Password trouvé, cherche mdp', password_authorized: false, message_id: message_id }
-          return { return: 'logged', password_authorized: true, user_id: user_exists[:user_id], message_id: message_id }
+          # Récupération des items du user
+          items_dataset = db_access[:atome].where(creator: user_exists[:user_id])
+          # Conversion du dataset en tableau de hashs
+          items_array = items_dataset.to_a
+          items= items_array.to_json
+          return { return: 'logged', password_authorized: true, user_id: user_exists[:user_id], user_items: items, message_id: message_id }
           # Send the user account template
         else
           return { return: 'Password trouvé, cherche mdp', password_authorized: false, message_id: message_id }
@@ -102,7 +99,7 @@ class EDen
     def historicize(data, message_id)
       # return test
       # ws.send(return_message.to_json)
-      return { return: 'item to historicize  received', authorized: true, message_id: message_id }
+      return { return: 'item to historicize received', authorized: true, message_id: message_id }
 
     end
 
@@ -149,9 +146,9 @@ class EDen
       # Construit la réponse indiquant si l'email existe ou non
       email_exists_response = !user.nil?
       puts "email_exists_response : #{email_exists_response}"
-       # Retourne la réponse
+      # Retourne la réponse
       { data: {email_exist: email_exists_response}, message_id: message_id }
-      
+
     end
 
     def insert(data, message_id)
