@@ -49,9 +49,13 @@ class TemplateInterface
 
     # Apparition du formulaire d'inscription quand on appuie sur le bouton correspondant
     navigation_button.touch(true) do
-      require_relative '../authentication/login_form'
+      # require_relative '../authentication/login_form'
+      require './authentication/auth_manager'
+      require_relative '../authentication/auth_interface'
+      # On crée un nouvel atome AuthInterface, qui correspond à la vue du formulaire d'authentification
+      auth_interface = AuthInterface.new
       # On appelle la fonction authent_form du fichier 'login_form.rb' pour afficher le formulaire d'inscription
-      authent_form
+      # authent_form
     end
   end
 

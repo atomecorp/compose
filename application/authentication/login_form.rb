@@ -50,7 +50,7 @@ def authent_form
                           text: :white,
                           default: 'Email'
                          })
-  
+
   email_box.border({ thickness: 2,
                      red: 0.1, green: 0.8, blue: 0.8, alpha: 1,
                      pattern: :solid
@@ -196,7 +196,7 @@ def authent_form
   end
 
   # def display_user_items
-  #  
+  #
   # end
 
   connection.touch(true) do
