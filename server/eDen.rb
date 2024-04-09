@@ -51,7 +51,7 @@ class EDen
           @@mail = nil
           @@pass = nil
           return { return: 'logged', mail_authorized: true, user_id: mail_exists[:user_id], message_id: message_id }
-          # Send the user account template
+          # TODO : Send the user account template
         else
           return { return: 'Email trouvé, cherche mdp', mail_authorized: false, message_id: message_id }
         end

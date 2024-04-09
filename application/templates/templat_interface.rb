@@ -21,8 +21,18 @@ class TemplateInterface
       box1.color(:red)
       # Ici, vous pouvez insérer la logique pour créer de nouveaux atomes
       current_user = box1.creator
-      c = circle(creator: current_user, color: :green, top: 200, left: 200, width: 250, height: 80)
-      c.text('creator : ' + current_user)
+      c = circle(creator: TemplateManager.current_user, color: :green, top: 200, left: 200, width: 250, height: 80)
+      c.text('creator : ' + TemplateManager.current_user)
+      
+      if TemplateManager.is_logged() == 'true'
+        puts "is_logged ok, on envoie les données de l'objet en base"
+        A.message({ action: :insert, data: { table: :atome, particles: { creator: c.creator,
+                                                                         top: c.top,
+                                                                         left: c.left,
+                                                                         width: c.width,
+                                                                         height: c.height } } })
+      end
+      
     end
   end
 
@@ -34,12 +44,15 @@ class TemplateInterface
       b = box(top: 400, left: 200)
       current_user = box1.creator
       b.text('creator : ' + current_user)
-      A.message({ action: :insert, data: { table: :atome, particles: { creator: b.creator,
-                                                                       # color: c.color,
-                                                                       top: b.top,
-                                                                       left: b.left,
-                                                                       width: b.width,
-                                                                       height: b.height } } })
+
+      if TemplateManager.is_logged() == 'true'
+        A.message({ action: :insert, data: { table: :atome, particles: { creator: b.creator,
+                                                                         # color: c.color,
+                                                                         top: b.top,
+                                                                         left: b.left,
+                                                                         width: b.width,
+                                                                         height: b.height } } })
+      end
     end
   end
 

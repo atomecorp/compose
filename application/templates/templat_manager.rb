@@ -15,6 +15,10 @@ class TemplateManager
   def self.set_anonymous_id(anonymous_id)
     JS.global[:localStorage].setItem('anonymous_id', anonymous_id)
   end
+  
+  def self.is_logged()
+    JS.global[:localStorage].getItem('logged')
+  end
 
   def self.reset_to_anonymous
     anonymous_id = anonymous_id()
