@@ -33,7 +33,10 @@ class AuthManager
         puts "user_id: #{user_id}"
         user_items = @@db[:atome].where(creator: user_id)
         puts " user_items: #{user_items}"
-      else
+      elsif response[:error]
+             yield(response[:message]) if block_given?
+             puts 'response[:error]'
+             puts response[:error]
         # Gestion du cas où 'authorized' est absent
       end
     end

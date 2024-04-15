@@ -11,19 +11,19 @@ class Database
 
     def create_table(table_name, type)
       eden = Sequel.connect("sqlite://eden.sqlite3")
-      type= case type
+      type = case type
 
-            when 'string'
-              String
-            when 'int'
-              Integer
-            when 'hash'
-              JSON
-            when 'date'
-              DateTime
-            else
-              Integer
-      end
+             when 'string'
+               String
+             when 'int'
+               Integer
+             when 'hash'
+               JSON
+             when 'date'
+               DateTime
+             else
+               Integer
+             end
       unless eden.table_exists?(table_name)
         eden.create_table table_name.to_sym do
           # primary_key "#{table_name}_id".to_sym
@@ -44,20 +44,22 @@ class Database
     #     end
     #   end
     # end
-    def create_column(table, column_name, type)
+    def create_column(table, column_name, type, unique=false)
       eden = Sequel.connect("sqlite://eden.sqlite3")
       if eden.table_exists?(table)
-        begin
-          Sequel.migration do
-            change do
-              add_column table, column_name, type unless eden.schema(table).any? { |column| column.first == column_name }
-            end
-          end.apply(eden, :up)
-        rescue Sequel::DatabaseError => e
-          puts "error adding column  : #{e.message}"
+        columns = eden.schema(table).map(&:first)
+        unless columns.include?(column_name)
+          eden.alter_table(table) do
+            add_column(column_name, type, unique: unique)
+          end
         end
+      else
+        puts "Table #{table} does not exist."
       end
+    ensure
+      eden.disconnect if eden
     end
+
   end
 
 end

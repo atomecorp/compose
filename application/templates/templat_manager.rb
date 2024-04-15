@@ -19,13 +19,17 @@ class TemplateManager
   def self.is_logged()
     JS.global[:localStorage].getItem('logged')
   end
+  
+  def self.set_is_logged()
+    JS.global[:localStorage].setItem('logged', 'false')
+  end
 
   def self.reset_to_anonymous
     anonymous_id = anonymous_id()
     JS.global[:localStorage].clear
     set_anonymous_id(anonymous_id)
     set_current_user(anonymous_id)
-    JS.global[:localStorage].setItem('logged', 'false')
+    set_is_logged()
   end
 
   def self.initialize_user
@@ -37,6 +41,10 @@ class TemplateManager
     unless current_user
       current_user = Universe.current_user
       set_current_user(current_user)
+    end
+    
+    unless is_logged
+      set_is_logged()
     end
   end
 

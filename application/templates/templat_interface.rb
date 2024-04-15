@@ -1,12 +1,30 @@
 require './templates/templat_manager'
 
 class TemplateInterface
+
   def initialize
     TemplateManager.initialize_user
-    create_ui_elements
+    puts 'is_logged :' + TemplateManager.is_logged
+    if TemplateManager.is_logged == 'false'
+      puts 'is_logged false :' + TemplateManager.is_logged
+      create_ui_elements
+    elsif TemplateManager.is_logged == 'true'
+      puts 'is_logged true :' + TemplateManager.is_logged
+      create_user_view
+    else
+      puts 'Rien à afficher'
+    end
+    
   end
 
   def create_ui_elements
+    create_anonymous_box
+    create_second_box
+    create_navigation_button
+    # create_logout_button
+  end
+  
+  def create_user_view
     create_anonymous_box
     create_second_box
     create_navigation_button
@@ -64,7 +82,7 @@ class TemplateInterface
     navigation_button.touch(true) do
       # require_relative '../authentication/login_form'
       require './authentication/auth_manager'
-      require_relative '../authentication/auth_interface'
+      require './authentication/auth_interface'
       # On crée un nouvel atome AuthInterface, qui correspond à la vue du formulaire d'authentification
       auth_interface = AuthInterface.new
       # On appelle la fonction authent_form du fichier 'login_form.rb' pour afficher le formulaire d'inscription
